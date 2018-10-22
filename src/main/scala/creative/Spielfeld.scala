@@ -1,5 +1,0 @@
-package creative
-
-class Spielfeld {
-
-}
