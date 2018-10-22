@@ -1,0 +1,5 @@
+package textinterface
+
+class tui {
+
+}
