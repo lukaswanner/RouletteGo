@@ -10,7 +10,7 @@ class CellSpec extends WordSpec with Matchers {
       val emptyCell = Cell(0,null)
       "have value 0 and color null" in {
         emptyCell.value should be(0)
-        emptyCell.color should be(null)
+        emptyCell.getColor should be(null)
       }
       "not be set" in {
         emptyCell.isSet should be(false)
@@ -20,7 +20,7 @@ class CellSpec extends WordSpec with Matchers {
       val nonEmptyCell = Cell(5,Color.black)
       "return that value and color" in {
         nonEmptyCell.value should be(5)
-        nonEmptyCell.color should be(Color.black)
+        nonEmptyCell.getColor should be(Color.black)
       }
       "be set" in {
         nonEmptyCell.isSet should be(true)
