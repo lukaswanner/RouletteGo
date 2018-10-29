@@ -1,39 +1,41 @@
 
-import creative.{Player, RowOfCells}
+import creative.{Playboard, Player, RowOfCells}
+import textinterface.tui
 
 object Roulette {
 
   def main(args: Array[String]): Unit = {
 
     val r = scala.util.Random
-    val random = r.nextInt(15)
-    System.out.println(random)
-    var input: String = ""
-    val tobi = new Player("tobi",1000)
-    val row = new RowOfCells()
-    row.setAmountOfRows(14)
+    val start = 0
+    val end = 13
+    val range = end - start
+    println("Wie viele Spieler habt ihr ?")
+    val PlayerCount = readInt()
+    val playboard = new Playboard(14, PlayerCount)
+    playboard.setUp()
+    val tui = new tui()
 
     do {
-      println("Tippe die Zahl ein auf die du tippen möchtest: ")
-      input = readLine()
-      var i: Int = input.toInt
-      if(tobi.PlayerWallet >= 100 && i != 0 && row.getCell(i).set != true){
-        tobi.minus(100)
-        System.out.println(tobi.PlayerWallet)
-        row.setCell(i)
-        System.out.println(row.getCell(i))
-      } else if(input.equals("red") || input.equals("black") || input.equals("green")) {
-        tobi.minus(100)
-        System.out.println(tobi.PlayerWallet)
-        row.setPlayerColor(input)
-      }
+      var random = start + r.nextInt((end - start) + 1)
+      random = random + 1
+      System.out.println(random)
+      do {
+        playboard.run()
+        println("Tippe 0 zum beenden")
 
-    } while (input.toInt != 0)
-    if(row.getCell(random).set || row.playerColor.equals(row.getCell(random).getColor)) {
-      tobi.plus(200)
-      System.out.print(tobi.PlayerWallet)
-    }
+      } while (readInt() != 0)
+      playboard.checkforWin(random)
+      println("Tippe 0 zum beenden")
+      var i = 0
+      for (i <- 0 until PlayerCount) {
+        println(playboard.getPlayer(i) + " hat vollgende Zahlen gesetzt oder Farben gesetzt")
+        tui.printTui(range, playboard.getrow(i))
+      }
+    } while (readInt() != 0)
+    println("Gewinner ist : ")
   }
+
 
 }
 

@@ -14,6 +14,10 @@ case class Player(Name:String,Wallet:Int) {
     return PlayerWallet
   }
 
+  def getName(): String ={
+    return Name
+  }
+
 
 
 }

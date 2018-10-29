@@ -26,6 +26,12 @@ class CellSpec extends WordSpec with Matchers {
         nonEmptyCell.isSet should be(true)
       }
     }
+    "a Cell that is printed" should {
+      val cell = Cell(1,Color.black)
+      "give 'The color is black.' as a result " in {
+        cell.toString should be("The color is black.")
+      }
+    }
   }
 
 }

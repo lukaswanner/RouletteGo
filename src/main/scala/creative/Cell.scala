@@ -23,4 +23,15 @@ case class Cell(value: Int, color: Color) {
     set = true
   }
 
+  override def toString = {
+    val Color = CellColor
+    if(CellColor.getRGB.equals(-16777216)) {
+      s"The color is black."
+    }else if(CellColor.getRGB.equals(-65536)) {
+      s"The color is red."
+    }else {
+      s"The color is green."
+    }
+  }
+
 }
