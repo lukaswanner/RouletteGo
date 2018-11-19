@@ -12,7 +12,7 @@ object Roulette {
     val range = end - start
     println("Wie viele Spieler habt ihr ?")
     val PlayerCount = readInt()
-    var playboard = new Playboard(14,Players = new Array[Player](PlayerCount))
+    var playboard = Playboard(14,Players = new Array[Player](PlayerCount))
     playboard = playboard.setUp()
     val tui = new tui()
 

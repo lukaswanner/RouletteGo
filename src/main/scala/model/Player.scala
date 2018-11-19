@@ -1,7 +1,7 @@
 package model
 
 case class Player(Name:String,Wallet:Int) {
-  override def toString:String = Name
+  //override def toString:String = Name
 
   def minus(Amount:Int): Player = {
     Player(Name,Wallet-Amount)
