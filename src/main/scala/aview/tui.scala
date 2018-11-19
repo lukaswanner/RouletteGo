@@ -1,8 +1,8 @@
-package textinterface
+package aview
 
 import java.awt.Color
 
-import creative.RowOfCells
+import model.RowOfCells
 
 class tui {
   def printTui(range: Int, row: RowOfCells): Unit = {
@@ -103,6 +103,7 @@ class tui {
     if (row.playerColor == Color.green) {
       println("GREEN")
     }
+    println("")
   }
 
 }

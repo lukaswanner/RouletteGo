@@ -1,13 +1,13 @@
 
 import java.awt.Color
 
-import creative.Cell
+import model.Cell
 import org.scalatest.{Matchers, WordSpec}
 
 class CellSpec extends WordSpec with Matchers {
   "A Cell" when {
     "not set to any value " should {
-      val emptyCell = Cell(0,null)
+      val emptyCell = Cell(0, null,false)
       "have value 0 and color null" in {
         emptyCell.value should be(0)
         emptyCell.getColor should be(null)
@@ -17,7 +17,7 @@ class CellSpec extends WordSpec with Matchers {
       }
     }
     "set to a specific value and color" should {
-      val nonEmptyCell = Cell(5,Color.black)
+      val nonEmptyCell = Cell(5, Color.black,true)
       "return that value and color" in {
         nonEmptyCell.value should be(5)
         nonEmptyCell.getColor should be(Color.black)
@@ -26,12 +26,26 @@ class CellSpec extends WordSpec with Matchers {
         nonEmptyCell.isSet should be(true)
       }
     }
-    "a Cell that is printed" should {
-      val cell = Cell(1,Color.black)
-      "give 'The color is black.' as a result " in {
-        cell.toString should be("The color is black.")
+    "an set Cell getColor" should {
+      val coloredCell = Cell(1, Color.black,false)
+      "respond with the color its given" in {
+        coloredCell.getColor should be(Color.black)
       }
     }
+    "an existing Cell" should {
+      val existingCell = Cell(1, Color.black,false)
+      "have the color its set after the set methode" in {
+        existingCell.setColor(Color.red) should be(Cell(1,Color.red,false))
+      }
+    }
+    "an Cell which isnt Set yet" should {
+      val notSetCell = Cell(1, Color.black,true)
+      "be set after calling the method" in {
+        notSetCell.setSet()
+        notSetCell.isSet should be(true)
+      }
+    }
+
   }
 
 }

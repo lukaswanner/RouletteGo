@@ -1,6 +1,6 @@
 
-import creative.{Playboard, Player, RowOfCells}
-import textinterface.tui
+import model.{Playboard, Player}
+import aview.tui
 
 object Roulette {
 
@@ -12,8 +12,8 @@ object Roulette {
     val range = end - start
     println("Wie viele Spieler habt ihr ?")
     val PlayerCount = readInt()
-    val playboard = new Playboard(14, PlayerCount)
-    playboard.setUp()
+    var playboard = new Playboard(14,Players = new Array[Player](PlayerCount))
+    playboard = playboard.setUp()
     val tui = new tui()
 
     do {
@@ -21,18 +21,19 @@ object Roulette {
       random = random + 1
       System.out.println(random)
       do {
-        playboard.run()
+        playboard = playboard.run()
         println("Tippe 0 zum beenden")
 
-      } while (readInt() != 0)
+      } while (readLine() != "0")
       playboard.checkforWin(random)
-      println("Tippe 0 zum beenden")
+      println("Tippe 0 zum beenden oder beliebige Taste zum fortfahren")
       var i = 0
       for (i <- 0 until PlayerCount) {
         println(playboard.getPlayer(i) + " hat vollgende Zahlen gesetzt oder Farben gesetzt")
         tui.printTui(range, playboard.getrow(i))
       }
-    } while (readInt() != 0)
+      playboard.refresh()
+    } while (readLine() != "0")
     println("Gewinner ist : ")
   }
 
