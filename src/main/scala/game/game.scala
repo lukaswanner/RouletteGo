@@ -1,7 +1,8 @@
 package game
 
 import aview.tui
-import model.{Playboard, Player}
+import controller.controller
+import model.{Playboard, Player, Solver}
 
 class game {
 
@@ -10,29 +11,28 @@ class game {
     val start = 0
     val end = 13
     val range = end - start
-    println("Wie viele Spieler habt ihr ?")
-    val PlayerCount = readInt()
-    var playboard = Playboard(14, Players = new Array[Player](PlayerCount))
-    playboard = playboard.setUp()
-    val tui = new tui()
+    val acontroller = new controller
+    acontroller.createBoard()
+    val playboard = acontroller.getPlayBoard()
+    val solver = new Solver(playboard)
 
     do {
       var random = start + r.nextInt((end - start) + 1)
       random = random + 1
       System.out.println(random)
       do {
-        playboard.run()
+        acontroller.run()
         println("Tippe 0 zum beenden")
 
       } while (readLine() != "0")
-      playboard.checkforWin(random)
+      solver.checkforWin(random)
       println("Tippe 0 zum beenden oder beliebige Taste zum fortfahren")
       var i = 0
-      for (i <- 0 until PlayerCount) {
+      for (i <- 0 until acontroller.getPlayerCount()) {
         println(playboard.getPlayer(i) + " hat vollgende Zahlen gesetzt oder Farben gesetzt")
-        tui.printTui(range, playboard.getrow(i))
       }
-      playboard.refresh()
+      acontroller.getRows()
+      //playboard.refresh()
     } while (readLine() != "0")
     println("Gewinner ist : ")
 
