@@ -1,15 +1,13 @@
 package model
 
-import model.{Player, RowOfCells}
 
 case class Playboard(AmountofCells: Int ,Players:Array[Player]) {
 
-  val arr:Array[Cell] = new Array[Cell](AmountofCells+1)
   val row: Array[RowOfCells] = new Array[RowOfCells](Players.length)
 
   var i: Int = 0
   for (i <- 0 to row.length - 1) {
-    row(i) = new RowOfCells(null,arr)
+    row(i) = new RowOfCells(null,arr = new Array[Cell](AmountofCells+1))
     row(i).setAmountOfRows(AmountofCells)
   }
 
@@ -26,7 +24,7 @@ case class Playboard(AmountofCells: Int ,Players:Array[Player]) {
     return aktuell
   }
 
-  def run(): Playboard = {
+  def run(): Unit = {
     var i: Int = 0
     for (i <- 0 until Players.length) {
       println(getPlayer(i).getName() + " tippe die Zahl ein auf die du tippen möchtest: ")
@@ -36,8 +34,6 @@ case class Playboard(AmountofCells: Int ,Players:Array[Player]) {
           setPlayer(i,getPlayer(i).minus(100))
           println(getPlayer(i).getWallet())
           row(i).setPlayerColor(in)
-          val aktuell = this.copy(AmountofCells,Players)
-          return aktuell
         }
       }
 
@@ -57,8 +53,6 @@ case class Playboard(AmountofCells: Int ,Players:Array[Player]) {
       }
 
     }
-    val aktuell = this.copy(AmountofCells,Players)
-    return aktuell
   }
 
   def checkforWin(winningNmbr: Int): Unit = {
@@ -88,6 +82,7 @@ case class Playboard(AmountofCells: Int ,Players:Array[Player]) {
       Players(Position) = player
     }
   }
+
   def refresh():Unit = {
     var i = 0
     for (i <- 0 until Players.length){
