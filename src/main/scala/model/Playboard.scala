@@ -1,12 +1,17 @@
 package model
 
+import controller.{SetCommand, controller}
 import util.UndoManager
 
 case class Playboard(AmountofCells: Int, Players: Array[Player]) {
 
   val row: Array[RowOfCells] = new Array[RowOfCells](Players.length) //die Spielfelder der verschiedenen Spieler
+  val undo:Array[UndoManager] = new Array[UndoManager](Players.length)
 
-  var i: Int = 0
+  for (i <- 0 until undo.length) {
+    undo(i) = new UndoManager
+  }
+
   for (i <- 0 to row.length - 1) {
     row(i) = new RowOfCells(null, arr = new Array[Cell](AmountofCells + 1))
     row(i).setAmountOfRows(AmountofCells)
@@ -61,5 +66,12 @@ case class Playboard(AmountofCells: Int, Players: Array[Player]) {
     }
   }
 
+  def Step(Position:Int,input:String,acontroller:controller): Unit ={
+    undo(Position).doStep(new SetCommand(Position,input,acontroller))
+  }
+
+  def undoStep(Position:Int): Unit = {
+    undo(Position).undoStep()
+  }
 
 }

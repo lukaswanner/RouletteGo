@@ -10,7 +10,6 @@ class controller extends Observable {
 
   val atui: tui = new tui(this)
   var playboard: Playboard = null
-  var undoManager = new UndoManager
 
   def createBoard(): Unit = {
     val players = new Array[Player](atui.getPlayerCount())
@@ -34,7 +33,7 @@ class controller extends Observable {
       var in  = atui.getInput(i)
       if (in.toInt != 0 && playboard.getindvrow(i).getCell(in.toInt).set != true) {
         if (playboard.getPlayer(i).getWallet() >= 100) {
-          undoManager.doStep(new SetCommand(i,in,this))
+          playboard.Step(i,in,this)
           notifyObservers
         } else if (playboard.getPlayer(i).getWallet() < 100) {
           println("zu wenig Geld !")
@@ -44,8 +43,8 @@ class controller extends Observable {
     }
   }
 
-  def undo(Position:Int,input:String):Unit = {
-    undoManager.undoStep(new SetCommand(Position,input,this))
+  def undo(Position:Int):Unit = {
+    playboard.undoStep(Position)
     notifyObservers
   }
 

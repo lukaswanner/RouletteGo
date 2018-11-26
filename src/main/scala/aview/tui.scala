@@ -90,7 +90,7 @@ class tui(acontroller: controller) extends Observer {
     var in = readLine()
     if (in.toInt == 0) {
       println("0 ist keine gültige Zahl")
-      acontroller.undo(Position,in)
+      acontroller.undo(Position)
       return "0"
     }
     return in
