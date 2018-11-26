@@ -21,7 +21,7 @@ class game {
       random = random + 1
       System.out.println(random)
       do {
-        acontroller.run()
+        acontroller.Step()
         println("Tippe 0 zum beenden")
 
       } while (readLine() != "0")
@@ -32,7 +32,7 @@ class game {
         println(playboard.getPlayer(i) + " hat vollgende Zahlen gesetzt oder Farben gesetzt")
       }
       acontroller.getRows()
-      //playboard.refresh()
+      playboard.refresh()
     } while (readLine() != "0")
     println("Gewinner ist : ")
 

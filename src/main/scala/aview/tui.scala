@@ -5,7 +5,8 @@ import java.awt.Color
 import model.{Player, RowOfCells}
 import util.Observer
 import controller.controller
-class tui(acontroller:controller) extends Observer {
+
+class tui(acontroller: controller) extends Observer {
 
   acontroller.add(this)
 
@@ -80,34 +81,25 @@ class tui(acontroller:controller) extends Observer {
     var Name: String = readLine()
     println("Gib bitte das Geld des Spielers ein : ")
     var Geld: Int = readInt()
-    val player = new Player(Name,Geld)
+    val player = new Player(Name, Geld)
     return player
   }
 
-  def getInput(): Unit = {
-    for (i <- 0 until acontroller.getPlayBoard().getrow().length) {
-      println(" tippe die Zahl ein auf die du tippen möchtest: ")
-      var in = readLine()
-      if (in.toInt != 0 && acontroller.getPlayBoard().getindvrow(i).getCell(in.toInt).set != true) {
-        if (acontroller.getPlayBoard().getPlayer(i).getWallet() >= 100) {
-          acontroller.getPlayBoard().setPlayer(i, acontroller.getPlayBoard().getPlayer(i).minus(100))
-          println(acontroller.getPlayBoard().getPlayer(i).getWallet())
-          acontroller.getPlayBoard().getindvrow(i).setCell(in.toInt)
-        } else if (acontroller.getPlayBoard().getPlayer(i).getWallet() < 100) {
-          println("zu wenig Geld !")
-        }
-      } else if (in.toInt != 0) {
-        println("Zelle schon gesetzt")
-      }
-      if (in.toInt == 0) {
-        println("0 ist keine gültige Zahl")
-      }
+  def getInput(Position:Int): String = {
+    println("tippe die Zahl ein auf die du tippen möchtest: ")
+    var in = readLine()
+    if (in.toInt == 0) {
+      println("0 ist keine gültige Zahl")
+      acontroller.undo(Position,in)
+      return "0"
     }
+    return in
   }
 
 
   override def update: Boolean = {
-    for (i<-0 until acontroller.getPlayerCount()) {
+    for (i <- 0 until acontroller.getPlayerCount()) {
+      println(acontroller.getPlayBoard().Players(i))
       printTui(acontroller.getPlayBoard().getAmountofCells() - 1, acontroller.getPlayBoard().getindvrow(i))
     }
     true

@@ -2,7 +2,7 @@ package controller
 
 import model.Player
 import model.Playboard
-import util.Observable
+import util.{Observable, UndoManager}
 import aview.tui
 //TODO controller fertig machen
 
@@ -10,6 +10,7 @@ class controller extends Observable {
 
   val atui: tui = new tui(this)
   var playboard: Playboard = null
+  var undoManager = new UndoManager
 
   def createBoard(): Unit = {
     val players = new Array[Player](atui.getPlayerCount())
@@ -28,9 +29,23 @@ class controller extends Observable {
     playboard.Players.length
   }
 
-  def run(): Unit = {
-    atui.getInput()
-    println("test " + getPlayerCount())
+  def Step(): Unit = {
+    for(i <- 0 until playboard.getrow().length) {
+      var in  = atui.getInput(i)
+      if (in.toInt != 0 && playboard.getindvrow(i).getCell(in.toInt).set != true) {
+        if (playboard.getPlayer(i).getWallet() >= 100) {
+          undoManager.doStep(new SetCommand(i,in,this))
+          notifyObservers
+        } else if (playboard.getPlayer(i).getWallet() < 100) {
+          println("zu wenig Geld !")
+          notifyObservers
+        }
+      }
+    }
+  }
+
+  def undo(Position:Int,input:String):Unit = {
+    undoManager.undoStep(new SetCommand(Position,input,this))
     notifyObservers
   }
 
