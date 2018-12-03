@@ -8,6 +8,7 @@ case class Playboard(AmountofCells: Int, Players: Array[Player]) {
   val row: Array[RowOfCells] = new Array[RowOfCells](Players.length) //die Spielfelder der verschiedenen Spieler
   val undo:Array[UndoManager] = new Array[UndoManager](Players.length)
 
+
   for (i <- 0 until undo.length) {
     undo(i) = new UndoManager
   }

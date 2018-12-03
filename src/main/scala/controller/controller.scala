@@ -8,16 +8,31 @@ import aview.tui
 
 class controller extends Observable {
 
-  val atui: tui = new tui(this)
   var playboard: Playboard = null
+  var range: Int = 13
+  val r = scala.util.Random
+  var random: Int = 0
 
-  def createBoard(): Unit = {
-    val players = new Array[Player](atui.getPlayerCount())
-    for (i <- 0 until players.length) {
-      players(i) = atui.createPlayer()
-    }
-    playboard = new Playboard(14, players)
+  def createBoard(PlayerCount: Int, players: Array[Player]): Unit = {
+    playboard = new Playboard(range + 1, players)
     notifyObservers
+  }
+
+
+  def getRandom(): Int = {
+    return random
+  }
+
+  def getNewRandom(range: Int): Int = {
+    random = r.nextInt((range) + 1)
+    random = random + 1
+    System.out.println(random)
+    return random
+  }
+
+  def setRange(newRange: Int): Int = {
+    range = newRange
+    return range
   }
 
   def getPlayBoard(): Playboard = {
@@ -28,29 +43,30 @@ class controller extends Observable {
     playboard.Players.length
   }
 
-  def Step(): Unit = {
-    for(i <- 0 until playboard.getrow().length) {
-      var in  = atui.getInput(i)
-      if (in.toInt != 0 && playboard.getindvrow(i).getCell(in.toInt).set != true) {
-        if (playboard.getPlayer(i).getWallet() >= 100) {
-          playboard.Step(i,in,this)
-          notifyObservers
-        } else if (playboard.getPlayer(i).getWallet() < 100) {
-          println("zu wenig Geld !")
-          notifyObservers
-        }
+  def Step(Position: Int,input:String): Unit = {
+    if (input.toInt != 0 && playboard.getindvrow(Position).getCell(input.toInt).set != true) {
+      if (playboard.getPlayer(Position).getWallet() >= 100) {
+        playboard.Step(Position, input, this)
+        notifyObservers
+      } else if (playboard.getPlayer(Position).getWallet() < 100) {
+        println("zu wenig Geld !")
+        notifyObservers
       }
     }
   }
 
-  def undo(Position:Int):Unit = {
+  def resize(newRange: Int): Unit = {
+    range = newRange
+  }
+
+  def undo(Position: Int): Unit = {
     playboard.undoStep(Position)
     notifyObservers
   }
 
-  def getRows(): Unit = {
-    notifyObservers
-  }
 
+  def createPlayer(Name: String, Wallet: Int): Player = {
+    return Player(Name, Wallet)
+  }
 
 }

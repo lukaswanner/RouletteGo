@@ -9,6 +9,8 @@ import controller.controller
 class tui(acontroller: controller) extends Observer {
 
   acontroller.add(this)
+  var Amount = 0
+  var finished = false
 
   def printTui(range: Int, row: RowOfCells): Unit = {
     var i: Int = 0
@@ -72,17 +74,20 @@ class tui(acontroller: controller) extends Observer {
 
   def getPlayerCount(): Int = {
     println("Wie viel Spieler habt ihr?")
-    var Amount: Int = readInt()
+    Amount = readInt()
     return Amount
   }
 
-  def createPlayer(): Player = {
-    println("Gib bitte Name des Spielers ein : ")
-    var Name: String = readLine()
-    println("Gib bitte das Geld des Spielers ein : ")
-    var Geld: Int = readInt()
-    val player = new Player(Name, Geld)
-    return player
+  def createPlayer(Amount:Int): Array[Player] = {
+    val players = new Array[Player](Amount)
+    for(i <- 0 until Amount) {
+      println("Gib bitte Name des Spielers ein : ")
+      var Name: String = readLine()
+      println("Gib bitte das Geld des Spielers ein : ")
+      var Wallet: Int = readInt()
+      players(i) = acontroller.createPlayer(Name,Wallet)
+    }
+    return players
   }
 
   def getInput(Position:Int): String = {
@@ -90,10 +95,56 @@ class tui(acontroller: controller) extends Observer {
     var in = readLine()
     if (in.toInt == 0) {
       println("0 ist keine gültige Zahl")
-      acontroller.undo(Position)
       return "0"
     }
     return in
+  }
+
+  def getRandomNmbr(Amount:Int):Unit = {
+    acontroller.getNewRandom(Amount)
+  }
+
+  def isFinished():Boolean = {
+    finished
+  }
+
+  def setFinished(boolean: Boolean): Boolean = {
+    finished = boolean
+    finished
+  }
+
+  def processInputLine(input: String,Position:Int):Unit = {
+    input match {
+      case "create"=> acontroller.createBoard(getPlayerCount(),createPlayer(Amount))
+      case "undo" => acontroller.undo(Position)
+      case "." => acontroller.resize(1)
+      case "+" => acontroller.resize(4)
+      case "#" => acontroller.resize(13)
+      case "step" => acontroller.Step(Position,getInput(Position))
+      case "exit" => setFinished(true)
+      case "reset" => acontroller.getPlayBoard().refresh()
+        setFinished(false)
+      case default => println("Falsche eingabe")
+      }
+    }
+
+  def commands():Unit = {
+    println("create  ------> erstellt ein neues Spielbrett")
+    println("undo    ------> Undo des letzten Schrittes")
+    println(".       ------> das Spielbrett ist nun 1 groß")
+    println("+       ------> das Spielbrett ist nun 4 groß")
+    println("#       ------> das Spielbrett ist nun 14 groß")
+    println("step    ------> ermöglicht auf eine Zahl zu tippen")
+    println("exit    ------> zum Beenden")
+    println("reset   ------> resetet die gesetzen Zahlen")
+  }
+
+  def continue(): Unit = {
+    println("Zum beenden exit zum fortfahren beliebige Taste")
+    if(!readLine().equals("exit")){
+      processInputLine("reset",0)
+      finished = false
+    }
   }
 
 

@@ -4,8 +4,6 @@ import java.awt.Color
 
 case class RowOfCells(playerColor:Color,arr:Array[Cell]) {
 
-  val r = scala.util.Random
-
   def setColor(amount: Int):Color = {
     if(amount % 14 == 0) {
       val green = Color.green
