@@ -56,7 +56,8 @@ class controller extends Observable {
   }
 
   def resize(newRange: Int): Unit = {
-    range = newRange
+    range = newRange-1
+    createBoard(getPlayerCount(),getPlayBoard().Players)
   }
 
   def undo(Position: Int): Unit = {

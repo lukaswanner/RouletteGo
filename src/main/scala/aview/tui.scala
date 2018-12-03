@@ -119,9 +119,10 @@ class tui(acontroller: controller) extends Observer {
       case "undo" => acontroller.undo(Position)
       case "." => acontroller.resize(1)
       case "+" => acontroller.resize(4)
-      case "#" => acontroller.resize(13)
+      case "#" => acontroller.resize(14)
       case "step" => acontroller.Step(Position,getInput(Position))
       case "exit" => setFinished(true)
+      case "resize" => acontroller.resize(readLine().toInt)
       case "solve" => var solver = new Solver(acontroller.getPlayBoard())
         if(solver.checkforWin(acontroller.getRandom(),Position)){
           println(acontroller.getPlayBoard().getPlayer(Position) + "hat gewonnen!")
