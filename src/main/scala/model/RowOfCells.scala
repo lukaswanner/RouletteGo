@@ -33,12 +33,14 @@ case class RowOfCells(playerColor:Color,arr:Array[Cell]) {
     }
   }
 
-  def setCell(number: Int): Unit = {
+  def setCell(number: Int): Cell = {
     arr(number) = arr(number).setSet()
+    arr(number)
   }
 
-  def unsetCell(number:Int): Unit = {
+  def unsetCell(number:Int): Cell = {
     arr(number) = arr(number).unsetSet()
+    arr(number)
   }
 
   def getCell(number: Int): Cell = {
