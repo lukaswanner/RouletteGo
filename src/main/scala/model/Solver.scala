@@ -3,13 +3,12 @@ package model
 class Solver(playboard: Playboard) {
 
 
-  def checkforWin(winningNmbr: Int): Unit = {
-    for (i <- 0 to playboard.getrow().length - 1) {
-      if (playboard.getindvrow(i).getCell(winningNmbr).set || playboard.getindvrow(i).playerColor == playboard.getindvrow(i).getCell(winningNmbr).getColor) {
-        playboard.setPlayer(i,playboard.getPlayer(i).plus(200))
-        println(playboard.getPlayer(i).getName() + " hat : " + playboard.getPlayer(i).getWallet() + "$$$")
+  def checkforWin(winningNmbr: Int,Position:Int): Boolean = {
+      if (playboard.getindvrow(Position).getCell(winningNmbr).set || playboard.getindvrow(Position).playerColor == playboard.getindvrow(Position).getCell(winningNmbr).getColor) {
+        playboard.setPlayer(Position,playboard.getPlayer(Position).plus(200))
+        return true
       }
+    return false
     }
-  }
 
 }

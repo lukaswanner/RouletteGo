@@ -13,20 +13,13 @@ object Roulette {
     var input: String = ""
     var solver: Solver = null
     atui.processInputLine("create", 0)
-
+    atui.getRandomNmbr(13)
+    atui.commands()
     do {
-      atui.getRandomNmbr(13)
-      atui.commands()
-      do {
-        for (i <- 0 until acontroller.getPlayerCount()) {
-          input = readLine()
-          atui.processInputLine(input, i)
-        }
-      } while (!atui.isFinished())
-      solver = new Solver(acontroller.getPlayBoard())
-      solver.checkforWin(acontroller.getRandom())
-      atui.continue()
-      atui.update
+      for (i <- 0 until acontroller.getPlayerCount()) {
+        input = readLine()
+        atui.processInputLine(input, i)
+      }
     } while (!atui.isFinished())
 
   }

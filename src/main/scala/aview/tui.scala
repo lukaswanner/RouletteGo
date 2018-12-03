@@ -2,7 +2,7 @@ package aview
 
 import java.awt.Color
 
-import model.{Player, RowOfCells}
+import model.{Player, RowOfCells, Solver}
 import util.Observer
 import controller.controller
 
@@ -122,6 +122,13 @@ class tui(acontroller: controller) extends Observer {
       case "#" => acontroller.resize(13)
       case "step" => acontroller.Step(Position,getInput(Position))
       case "exit" => setFinished(true)
+      case "solve" => var solver = new Solver(acontroller.getPlayBoard())
+        if(solver.checkforWin(acontroller.getRandom(),Position)){
+          println(acontroller.getPlayBoard().getPlayer(Position) + "hat gewonnen!")
+        }else{
+          println(acontroller.getPlayBoard().getPlayer(Position) + "hat verloren!")
+        }
+        acontroller.getPlayBoard().refreshOne(Position)
       case "reset" => acontroller.getPlayBoard().refresh()
         setFinished(false)
       case default => println("Falsche eingabe")
@@ -131,6 +138,7 @@ class tui(acontroller: controller) extends Observer {
   def commands():Unit = {
     println("create  ------> erstellt ein neues Spielbrett")
     println("undo    ------> Undo des letzten Schrittes")
+    println("solve   ------> schaut ob man gewonnen hat")
     println(".       ------> das Spielbrett ist nun 1 groß")
     println("+       ------> das Spielbrett ist nun 4 groß")
     println("#       ------> das Spielbrett ist nun 14 groß")

@@ -61,10 +61,14 @@ case class Playboard(AmountofCells: Int, Players: Array[Player]) {
 
 
   def refresh(): Unit = {
-    var i = 0
     for (i <- 0 until Players.length) {
       row(i).setAmountOfRows(AmountofCells)
     }
+  }
+
+  def refreshOne(Position:Int): Unit = {
+      row(Position).setAmountOfRows(AmountofCells)
+
   }
 
   def Step(Position:Int,input:String,acontroller:controller): Unit ={

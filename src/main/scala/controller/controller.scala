@@ -4,7 +4,7 @@ import model.Player
 import model.Playboard
 import util.{Observable, UndoManager}
 import aview.tui
-//TODO controller fertig machen
+//TODO redo implimentieren
 
 class controller extends Observable {
 
