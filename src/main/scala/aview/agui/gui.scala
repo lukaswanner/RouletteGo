@@ -22,7 +22,7 @@ class gui(controller: ControllerInterface) extends Frame {
     val statusline = new TextField("hallo", 20)
 
 
-    def highlightpanel = new FlowPanel {
+     val highlightpanel = new FlowPanel {
       contents += new Label("Felder:")
       for {index <- 1 to controller.getPlayBoard().AmountofCells} {
         val button = new Button(index.toString) {
@@ -54,6 +54,7 @@ class gui(controller: ControllerInterface) extends Frame {
         mnemonic = Key.F
         contents += new MenuItem(Action("New") {
           controller.getPlayBoard().refresh()
+          redraw()
         })
         contents += new MenuItem(Action("Quit") {
           System.exit(0)

@@ -21,7 +21,7 @@ object Roulette {
       for (i <- 0 until acontroller.getPlayerCount()) {
         gui.processInput(i)
         input = readLine()
-        //atui.processInputLine(input, i)
+        atui.processInputLine(input, i)
       }
     } while (!atui.isFinished())
 
