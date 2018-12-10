@@ -11,15 +11,16 @@ import scala.io.Source._
 
 class gui(controller: ControllerInterface) extends Frame {
 
-  preferredSize = new Dimension(1400,400)
+  preferredSize = new Dimension(1400, 400)
 
   title = "HTWG Sudoku"
-
+  var buttonArr: Array[Button] = new Array[Button](controller.getPlayBoard().AmountofCells + 1)
   listenTo(controller)
 
   def processInput(Position: Int) {
 
     val statusline = new TextField("hallo", 20)
+
 
     def highlightpanel = new FlowPanel {
       contents += new Label("Felder:")
@@ -30,17 +31,17 @@ class gui(controller: ControllerInterface) extends Frame {
               if (controller.getPlayBoard().row(Position).getCell(index).isSet == true) {
                 text = "X"
                 statusline.text = "Gesetzt =)"
-              }else{
+              } else {
                 statusline.text = "Kein Geld mehr =("
               }
           }
         }
+        buttonArr(index) = button
         button.preferredSize_=(new Dimension(50, 50))
         contents += button
         listenTo(button)
       }
     }
-
 
 
     contents = new BorderPanel {
@@ -51,23 +52,29 @@ class gui(controller: ControllerInterface) extends Frame {
     menuBar = new MenuBar {
       contents += new Menu("File") {
         mnemonic = Key.F
-        contents += new MenuItem(Action("New") {controller.getPlayBoard().refresh()})
+        contents += new MenuItem(Action("New") {
+          controller.getPlayBoard().refresh()
+        })
         contents += new MenuItem(Action("Quit") {
           System.exit(0)
         })
       }
       contents += new Menu("Edit") {
         mnemonic = Key.E
-        contents += new MenuItem(Action("Undo") {controller.undo(Position)})
-        contents += new MenuItem(Action("Redo") {controller.undo(Position)})
+        contents += new MenuItem(Action("Undo") {
+          controller.undo(Position)
+        })
+        contents += new MenuItem(Action("Redo") {
+          controller.undo(Position)
+        })
       }
       contents += new Menu("Solve") {
         mnemonic = Key.S
         contents += new MenuItem(Action("Solve") {
           var solver = new Solver(controller.getPlayBoard())
-          if(solver.checkforWin(controller.getRandom(),Position)){
+          if (solver.checkforWin(controller.getRandom(), Position)) {
             statusline.text = "Gewonnen !"
-          }else{
+          } else {
             statusline.text = "Verloren !"
           }
           controller.getPlayBoard().refreshOne(Position)
@@ -87,7 +94,7 @@ class gui(controller: ControllerInterface) extends Frame {
     }
 
     reactions += {
-      case e : CellChanged => redraw()
+      case e: CellChanged => redraw()
     }
 
     visible = true
@@ -96,7 +103,13 @@ class gui(controller: ControllerInterface) extends Frame {
   }
 
   def redraw() = {
-    println(2)
+    for (i <- 1 until buttonArr.length) {
+      if(!controller.getPlayBoard().row(0).arr(i).isSet) {
+          buttonArr(i).text = i.toString
+      }
+    }
+    repaint()
+
   }
 
 }
