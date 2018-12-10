@@ -1,9 +1,9 @@
 package controller
 
-import model.Player
-import model.Playboard
 import util.{Observable, UndoManager}
 import aview.tui
+import model.playboardComponent.playboardAdvancedImpl.Playboard
+import model.playerComponent.Player
 //TODO redo implimentieren
 
 class controller extends Observable {

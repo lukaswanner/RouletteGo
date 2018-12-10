@@ -2,9 +2,10 @@ package aview
 
 import java.awt.Color
 
-import model.{Player, RowOfCells, Solver}
 import util.Observer
 import controller.controller
+import model.playboardComponent.playboardBaseImpl.{RowOfCells, Solver}
+import model.playerComponent.Player
 
 class tui(acontroller: controller) extends Observer {
 

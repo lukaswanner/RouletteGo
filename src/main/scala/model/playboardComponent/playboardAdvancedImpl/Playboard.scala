@@ -1,6 +1,8 @@
-package model
+package model.playboardComponent.playboardAdvancedImpl
 
 import controller.{SetCommand, controller}
+import model.playboardComponent.playboardBaseImpl.{Cell, RowOfCells}
+import model.playerComponent.Player
 import util.UndoManager
 
 case class Playboard(AmountofCells: Int, Players: Array[Player]) {

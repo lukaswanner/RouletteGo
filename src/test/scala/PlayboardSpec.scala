@@ -1,4 +1,7 @@
-import model.{Playboard, Player}
+import model.playboardComponent
+import model.playboardComponent.playboardAdvancedImpl
+import model.playboardComponent.playboardAdvancedImpl.Playboard
+import model.playerComponent.Player
 import org.scalatest.{Matchers, WordSpec}
 
 class PlayboardSpec extends WordSpec with Matchers {
@@ -8,7 +11,7 @@ class PlayboardSpec extends WordSpec with Matchers {
       val players = new Array[Player](2)
       players(0) = new Player("lukas",1000)
       players(1) = new Player("tobi",1000)
-      val playboard = Playboard(14, players)
+      val playboard = playboardAdvancedImpl.Playboard(14, players)
       "have 2 rows" in {
         val row = playboard.getrow()
         row.length should be(players.length)

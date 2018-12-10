@@ -1,4 +1,4 @@
-package model
+package model.playboardComponent.playboardBaseImpl
 
 import java.awt.Color
 

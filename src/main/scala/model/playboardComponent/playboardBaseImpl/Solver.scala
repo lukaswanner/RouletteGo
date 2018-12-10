@@ -1,4 +1,6 @@
-package model
+package model.playboardComponent.playboardBaseImpl
+
+import model.playboardComponent.playboardAdvancedImpl.Playboard
 
 class Solver(playboard: Playboard) {
 

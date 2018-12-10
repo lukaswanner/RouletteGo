@@ -1,7 +1,7 @@
 
 import aview.tui
 import controller.controller
-import model.Solver
+import model.playboardComponent.playboardBaseImpl.Solver
 //val game = new game()
 //game.runtheGame()
 
