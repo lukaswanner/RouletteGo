@@ -1,11 +1,11 @@
-package model.playboardComponent.playboardAdvancedImpl
+package model.playboardComponent.playboardBaseImpl
 
-import controller.{SetCommand, controller}
-import model.playboardComponent.playboardBaseImpl.{Cell, RowOfCells}
+import controller.controllerBaseImpl.{SetCommand, controller}
+import model.playboardComponent.playboardInterface
 import model.playerComponent.Player
 import util.UndoManager
 
-case class Playboard(AmountofCells: Int, Players: Array[Player]) {
+case class Playboard(AmountofCells: Int, Players: Array[Player]) extends playboardInterface{
 
   val row: Array[RowOfCells] = new Array[RowOfCells](Players.length) //die Spielfelder der verschiedenen Spieler
   val undo:Array[UndoManager] = new Array[UndoManager](Players.length)

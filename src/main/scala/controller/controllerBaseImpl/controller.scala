@@ -1,12 +1,12 @@
-package controller
+package controller.controllerBaseImpl
 
-import util.{Observable, UndoManager}
-import aview.tui
-import model.playboardComponent.playboardAdvancedImpl.Playboard
+import controller.{CellChanged, ControllerInterface}
+import model.playboardComponent.playboardBaseImpl.Playboard
 import model.playerComponent.Player
+import util.Observable
 //TODO redo implimentieren
 
-class controller extends Observable {
+class controller extends ControllerInterface  {
 
   var playboard: Playboard = null
   var range: Int = 13
@@ -15,7 +15,7 @@ class controller extends Observable {
 
   def createBoard(PlayerCount: Int, players: Array[Player]): Unit = {
     playboard = new Playboard(range + 1, players)
-    notifyObservers
+    publish(new CellChanged)
   }
 
 
@@ -43,16 +43,19 @@ class controller extends Observable {
     playboard.Players.length
   }
 
-  def Step(Position: Int,input:String): Unit = {
+  def Step(Position: Int,input:String): Boolean = {
     if (input.toInt != 0 && playboard.getindvrow(Position).getCell(input.toInt).set != true) {
       if (playboard.getPlayer(Position).getWallet() >= 100) {
         playboard.Step(Position, input, this)
-        notifyObservers
+        publish(new CellChanged)
+        return true
       } else if (playboard.getPlayer(Position).getWallet() < 100) {
         println("zu wenig Geld !")
-        notifyObservers
+        publish(new CellChanged)
+        return false
       }
     }
+    return false
   }
 
   def resize(newRange: Int): Unit = {
@@ -62,7 +65,7 @@ class controller extends Observable {
 
   def undo(Position: Int): Unit = {
     playboard.undoStep(Position)
-    notifyObservers
+    publish(new CellChanged)
   }
 
 

@@ -1,6 +1,7 @@
 package model.playerComponent
 
-case class Player(Name:String,Wallet:Int) {
+
+case class Player(Name:String,Wallet:Int){
   //override def toString:String = Name
 
   def minus(Amount:Int): Player = {

@@ -2,7 +2,6 @@ package model.playboardComponent.playboardBaseImpl
 
 import java.awt.Color
 
-import Cell
 
 case class RowOfCells(playerColor:Color,arr:Array[Cell]) {
 

@@ -2,14 +2,17 @@ package aview
 
 import java.awt.Color
 
+import controller.controllerBaseImpl.controller
+import _root_.controller.CellChanged
 import util.Observer
-import controller.controller
 import model.playboardComponent.playboardBaseImpl.{RowOfCells, Solver}
 import model.playerComponent.Player
 
-class tui(acontroller: controller) extends Observer {
+import scala.swing.Reactor
 
-  acontroller.add(this)
+class tui(acontroller: controller) extends Reactor {
+
+  listenTo(acontroller)
   var Amount = 0
   var finished = false
 
@@ -157,8 +160,12 @@ class tui(acontroller: controller) extends Observer {
     }
   }
 
+  reactions += {
+    case event: CellChanged => update
+  }
 
-  override def update: Boolean = {
+
+   def update: Boolean = {
     for (i <- 0 until acontroller.getPlayerCount()) {
       println(acontroller.getPlayBoard().Players(i))
       printTui(acontroller.getPlayBoard().getAmountofCells() - 1, acontroller.getPlayBoard().getindvrow(i))

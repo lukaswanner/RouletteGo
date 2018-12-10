@@ -1,8 +1,8 @@
 package model.playboardComponent.playboardBaseImpl
 
-import model.playboardComponent.playboardAdvancedImpl.Playboard
+import model.playboardComponent.playboardInterface
 
-class Solver(playboard: Playboard) {
+class Solver(playboard: playboardInterface) {
 
 
   def checkforWin(winningNmbr: Int,Position:Int): Boolean = {
