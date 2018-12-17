@@ -2,6 +2,7 @@ package aview.agui
 
 import controller.{CellChanged, ControllerInterface}
 import model.playboardComponent.playboardBaseImpl.Solver
+import util.UndoManager
 
 import scala.swing._
 import scala.swing.Swing.LineBorder
@@ -13,7 +14,7 @@ class gui(controller: ControllerInterface) extends Frame {
 
   preferredSize = new Dimension(1400, 400)
 
-  title = "HTWG Sudoku"
+  title = "Roulette ist sutper"
   val Label1 = new Label()
   val statusline = new TextField("hallo", 20)
   var buttonArr: Array[Button] = new Array[Button](controller.getRange() + 2)
@@ -26,7 +27,7 @@ class gui(controller: ControllerInterface) extends Frame {
     case e: CellChanged => redraw(controller.getPlayBoard().getactivePlayer())
   }
 
-  redraw(controller.getPlayBoard().getactivePlayer())
+  //redraw(controller.getPlayBoard().getactivePlayer())
   visible = true
   repaint()
 
@@ -68,6 +69,9 @@ class gui(controller: ControllerInterface) extends Frame {
             statusline.text = "Gewonnen !"
           } else {
             statusline.text = "Verloren !"
+          }
+          for (i <- 0 until controller.getPlayBoard().Players.length) {
+            controller.getPlayBoard().undo(i) = new UndoManager
           }
           controller.getPlayBoard().refreshOne(controller.getPlayBoard().getactivePlayer())
           redraw(controller.getPlayBoard().getactivePlayer())
@@ -134,6 +138,8 @@ class gui(controller: ControllerInterface) extends Frame {
     }
 
   }
+
+
 
   def redraw(Position: Int) = {
     highlightpanel()

@@ -4,7 +4,7 @@ import java.awt.Color
 
 import controller.controllerBaseImpl.controller
 import _root_.controller.CellChanged
-import util.Observer
+import util.{Observer, UndoManager}
 import model.playboardComponent.playboardBaseImpl.{RowOfCells, Solver}
 import model.playerComponent.Player
 
@@ -13,6 +13,10 @@ import scala.swing.Reactor
 class tui(acontroller: controller) extends Reactor {
 
   listenTo(acontroller)
+
+  getPlayerCount()
+
+  createPlayer(Amount:Int)
 
   var Amount = 0
   var finished = false
@@ -135,6 +139,9 @@ class tui(acontroller: controller) extends Reactor {
         acontroller.resize(input)
         acontroller.getNewRandom(input)
       case "solve" => var solver = new Solver(acontroller.getPlayBoard())
+        for(i <- 0 until acontroller.getPlayBoard().Players.length) {
+          acontroller.getPlayBoard().undo(i) = new UndoManager
+        }
         if(solver.checkforWin(acontroller.getRandom(),Position)){
           println(acontroller.getPlayBoard().getPlayer(Position) + "hat gewonnen!")
         }else{
