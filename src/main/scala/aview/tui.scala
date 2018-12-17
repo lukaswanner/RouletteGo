@@ -13,6 +13,7 @@ import scala.swing.Reactor
 class tui(acontroller: controller) extends Reactor {
 
   listenTo(acontroller)
+
   var Amount = 0
   var finished = false
 
@@ -121,12 +122,18 @@ class tui(acontroller: controller) extends Reactor {
     input match {
       case "create"=> acontroller.createBoard(getPlayerCount(),createPlayer(Amount))
       case "undo" => acontroller.undo(Position)
+      case "refresh" => update
       case "." => acontroller.resize(1)
+        acontroller.getNewRandom(1)
       case "+" => acontroller.resize(4)
+        acontroller.getNewRandom(4)
       case "#" => acontroller.resize(14)
+        acontroller.getNewRandom(14)
       case "step" => acontroller.Step(Position,getInput(Position))
       case "exit" => setFinished(true)
-      case "resize" => acontroller.resize(readLine().toInt)
+      case "resize" => var input = readLine().toInt
+        acontroller.resize(input)
+        acontroller.getNewRandom(input)
       case "solve" => var solver = new Solver(acontroller.getPlayBoard())
         if(solver.checkforWin(acontroller.getRandom(),Position)){
           println(acontroller.getPlayBoard().getPlayer(Position) + "hat gewonnen!")
@@ -143,15 +150,18 @@ class tui(acontroller: controller) extends Reactor {
   def commands():Unit = {
     println("create  ------> erstellt ein neues Spielbrett")
     println("undo    ------> Undo des letzten Schrittes")
+    println("refresh ------> aktualisiert das Spielbrett")
     println("solve   ------> schaut ob man gewonnen hat")
     println(".       ------> das Spielbrett ist nun 1 groß")
     println("+       ------> das Spielbrett ist nun 4 groß")
     println("#       ------> das Spielbrett ist nun 14 groß")
+    println("resize  ------> das Spielbrett ist nun 14 groß")
     println("step    ------> ermöglicht auf eine Zahl zu tippen")
     println("exit    ------> zum Beenden")
     println("reset   ------> resetet die gesetzen Zahlen")
   }
 
+  /*
   def continue(): Unit = {
     println("Zum beenden exit zum fortfahren beliebige Taste")
     if(!readLine().equals("exit")){
@@ -159,6 +169,7 @@ class tui(acontroller: controller) extends Reactor {
       finished = false
     }
   }
+*/
 
   reactions += {
     case event: CellChanged => update

@@ -6,7 +6,7 @@ import model.playerComponent.Player
 import util.Observable
 //TODO redo implimentieren
 
-class controller extends ControllerInterface  {
+class controller extends ControllerInterface {
 
   var playboard: Playboard = null
   var range: Int = 13
@@ -15,6 +15,7 @@ class controller extends ControllerInterface  {
 
   def createBoard(PlayerCount: Int, players: Array[Player]): Unit = {
     playboard = new Playboard(range + 1, players)
+    playboard.active(0) = true
     publish(new CellChanged)
   }
 
@@ -43,8 +44,9 @@ class controller extends ControllerInterface  {
     playboard.Players.length
   }
 
-  def Step(Position: Int,input:String): Boolean = {
+  def Step(Position: Int, input: String): Boolean = {
     if (input.toInt != 0 && playboard.getindvrow(Position).getCell(input.toInt).set != true) {
+      playboard.activatePlayer(Position)
       if (playboard.getPlayer(Position).getWallet() >= 100) {
         playboard.Step(Position, input, this)
         publish(new CellChanged)
@@ -59,8 +61,12 @@ class controller extends ControllerInterface  {
   }
 
   def resize(newRange: Int): Unit = {
-    range = newRange-1
-    createBoard(getPlayerCount(),getPlayBoard().Players)
+    range = newRange - 1
+    createBoard(getPlayerCount(), getPlayBoard().Players)
+  }
+
+  def getRange(): Int = {
+    range
   }
 
   def undo(Position: Int): Unit = {

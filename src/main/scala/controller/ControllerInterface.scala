@@ -25,6 +25,8 @@ trait ControllerInterface extends Publisher{
 
   def resize(newRange: Int): Unit
 
+  def getRange():Int
+
   def undo(Position: Int): Unit
 
 
