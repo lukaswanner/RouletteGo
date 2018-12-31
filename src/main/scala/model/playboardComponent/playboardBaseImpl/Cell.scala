@@ -1,8 +1,10 @@
-package model
+package model.playboardComponent.playboardBaseImpl
 
 import java.awt.Color
 
-case class Cell(value: Int, color: Color,set:Boolean) {
+import model.playboardComponent.CellInterface
+
+case class Cell(value: Int, color: Color,set:Boolean) extends CellInterface {
 
 
   def isSet:Boolean =  {
