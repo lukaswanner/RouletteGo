@@ -3,7 +3,7 @@ package aview
 import java.awt.Color
 
 import controller.controllerBaseImpl.controller
-import _root_.controller.CellChanged
+import _root_.controller.{CellChanged, GameStart}
 import util.{Observer, UndoManager}
 import model.playboardComponent.playboardBaseImpl.{RowOfCells, Solver}
 import model.playerComponent.Player
@@ -14,12 +14,10 @@ class tui(acontroller: controller) extends Reactor {
 
   listenTo(acontroller)
 
-  getPlayerCount()
-
-  createPlayer(Amount:Int)
 
   var Amount = 0
   var finished = false
+  var Setup = false
 
   def printTui(range: Int, row: RowOfCells): Unit = {
     var i: Int = 0
@@ -82,24 +80,24 @@ class tui(acontroller: controller) extends Reactor {
   }
 
   def getPlayerCount(): Int = {
-    println("Wie viel Spieler habt ihr?")
+    println("Wie viel Spieler habt ihr? Tippe 0 falls Gui benutzt wurde")
     Amount = readInt()
     return Amount
   }
 
-  def createPlayer(Amount:Int): Array[Player] = {
+  def createPlayer(Amount: Int): Array[Player] = {
     val players = new Array[Player](Amount)
-    for(i <- 0 until Amount) {
+    for (i <- 0 until Amount) {
       println("Gib bitte Name des Spielers ein : ")
       var Name: String = readLine()
       println("Gib bitte das Geld des Spielers ein : ")
       var Wallet: Int = readInt()
-      players(i) = acontroller.createPlayer(Name,Wallet)
+      players(i) = acontroller.createPlayer(Name, Wallet)
     }
     return players
   }
 
-  def getInput(Position:Int): String = {
+  def getInput(Position: Int): String = {
     println("tippe die Zahl ein auf die du tippen möchtest: ")
     var in = readLine()
     if (in.toInt == 0) {
@@ -109,11 +107,11 @@ class tui(acontroller: controller) extends Reactor {
     return in
   }
 
-  def getRandomNmbr(Amount:Int):Unit = {
+  def getRandomNmbr(Amount: Int): Unit = {
     acontroller.getNewRandom(Amount)
   }
 
-  def isFinished():Boolean = {
+  def isFinished(): Boolean = {
     finished
   }
 
@@ -122,9 +120,12 @@ class tui(acontroller: controller) extends Reactor {
     finished
   }
 
-  def processInputLine(input: String,Position:Int):Unit = {
+  def processInputLine(input: String, Position: Int): Unit = {
     input match {
-      case "create"=> acontroller.createBoard(getPlayerCount(),createPlayer(Amount))
+      case "create" => val i = getPlayerCount()
+        if (i > 0) {
+          acontroller.createBoard(i, createPlayer(Amount))
+        }
       case "undo" => acontroller.undo(Position)
       case "refresh" => update
       case "." => acontroller.resize(1)
@@ -133,28 +134,28 @@ class tui(acontroller: controller) extends Reactor {
         acontroller.getNewRandom(4)
       case "#" => acontroller.resize(14)
         acontroller.getNewRandom(14)
-      case "step" => acontroller.Step(Position,getInput(Position))
+      case "step" => acontroller.Step(Position, getInput(Position))
       case "exit" => setFinished(true)
       case "resize" => var input = readLine().toInt
         acontroller.resize(input)
         acontroller.getNewRandom(input)
       case "solve" => var solver = new Solver(acontroller.getPlayBoard())
-        for(i <- 0 until acontroller.getPlayBoard().Players.length) {
+        for (i <- 0 until acontroller.getPlayBoard().Players.length) {
           acontroller.getPlayBoard().undo(i) = new UndoManager
         }
-        if(solver.checkforWin(acontroller.getRandom(),Position)){
+        if (solver.checkforWin(acontroller.getRandom(), Position)) {
           println(acontroller.getPlayBoard().getPlayer(Position) + "hat gewonnen!")
-        }else{
+        } else {
           println(acontroller.getPlayBoard().getPlayer(Position) + "hat verloren!")
         }
         acontroller.getPlayBoard().refreshOne(Position)
       case "reset" => acontroller.getPlayBoard().refresh()
         setFinished(false)
       case default => println("Falsche eingabe")
-      }
     }
+  }
 
-  def commands():Unit = {
+  def commands(): Unit = {
     println("create  ------> erstellt ein neues Spielbrett")
     println("undo    ------> Undo des letzten Schrittes")
     println("refresh ------> aktualisiert das Spielbrett")
@@ -168,22 +169,14 @@ class tui(acontroller: controller) extends Reactor {
     println("reset   ------> resetet die gesetzen Zahlen")
   }
 
-  /*
-  def continue(): Unit = {
-    println("Zum beenden exit zum fortfahren beliebige Taste")
-    if(!readLine().equals("exit")){
-      processInputLine("reset",0)
-      finished = false
-    }
-  }
-*/
 
   reactions += {
     case event: CellChanged => update
+    case event1: GameStart =>
   }
 
 
-   def update: Boolean = {
+  def update: Boolean = {
     for (i <- 0 until acontroller.getPlayerCount()) {
       println(acontroller.getPlayBoard().Players(i))
       printTui(acontroller.getPlayBoard().getAmountofCells() - 1, acontroller.getPlayBoard().getindvrow(i))

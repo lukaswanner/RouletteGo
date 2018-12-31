@@ -1,6 +1,6 @@
 package controller.controllerBaseImpl
 
-import controller.{CellChanged, ControllerInterface}
+import controller.{CellChanged, ControllerInterface, GameStart}
 import model.playboardComponent.playboardBaseImpl.Playboard
 import model.playerComponent.Player
 import util.Observable
@@ -16,7 +16,7 @@ class controller extends ControllerInterface {
   def createBoard(PlayerCount: Int, players: Array[Player]): Unit = {
     playboard = new Playboard(range + 1, players)
     playboard.active(0) = true
-    publish(new CellChanged)
+    publish(new GameStart)
   }
 
 

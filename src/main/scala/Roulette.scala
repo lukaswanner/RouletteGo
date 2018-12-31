@@ -13,10 +13,10 @@ object Roulette {
     val atui = new tui(acontroller)
     var input: String = ""
     var solver: Solver = null
-    atui.processInputLine("create", 0)
-    atui.getRandomNmbr(13)
     val gui = new gui(acontroller)
+    atui.getRandomNmbr(13)
     atui.commands()
+    atui.processInputLine("create", 0)
     do {
       for (i <- 0 until acontroller.getPlayerCount()) {
        input = readLine()

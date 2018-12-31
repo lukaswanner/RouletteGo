@@ -1,8 +1,9 @@
 package aview.agui
 
-import controller.{CellChanged, ControllerInterface}
+import controller.{CellChanged, ControllerInterface, GameStart}
 import model.playboardComponent.playboardBaseImpl.Solver
 import util.UndoManager
+import model.playerComponent.Player
 
 import scala.swing._
 import scala.swing.Swing.LineBorder
@@ -11,28 +12,31 @@ import scala.io.Source._
 
 
 class gui(controller: ControllerInterface) extends Frame {
-
   preferredSize = new Dimension(1400, 400)
-
   title = "Roulette ist sutper"
+
+  var frame = new MainFrame()
   val Label1 = new Label()
   val statusline = new TextField("hallo", 20)
   var buttonArr: Array[Button] = new Array[Button](controller.getRange() + 2)
   listenTo(controller)
 
-  setUp()
 
+  PlayerCount()
 
   reactions += {
     case e: CellChanged => redraw(controller.getPlayBoard().getactivePlayer())
+    case g: GameStart => frame.close()
+      Game()
   }
 
   //redraw(controller.getPlayBoard().getactivePlayer())
   visible = true
+  centerOnScreen()
   repaint()
 
 
-  def setUp() {
+  def Game() {
 
 
     contents = new BorderPanel {
@@ -87,7 +91,7 @@ class gui(controller: ControllerInterface) extends Frame {
           highlightpanel()
           controller.getNewRandom(controller.getRange())
           println(controller.getRandom())
-          setUp()
+          Game()
           redraw(controller.getPlayBoard().getactivePlayer())
         })
         contents += new MenuItem(Action("Size of 4") {
@@ -95,7 +99,7 @@ class gui(controller: ControllerInterface) extends Frame {
           highlightpanel()
           controller.getNewRandom(controller.getRange())
           println(controller.getRandom())
-          setUp()
+          Game()
           redraw(controller.getPlayBoard().getactivePlayer())
         })
         contents += new MenuItem(Action("Size of 9") {
@@ -103,7 +107,7 @@ class gui(controller: ControllerInterface) extends Frame {
           highlightpanel()
           controller.getNewRandom(controller.getRange())
           println(controller.getRandom())
-          setUp()
+          Game()
           redraw(controller.getPlayBoard().getactivePlayer())
         })
 
@@ -112,14 +116,17 @@ class gui(controller: ControllerInterface) extends Frame {
           highlightpanel()
           controller.getNewRandom(controller.getRange())
           println(controller.getRandom())
-          setUp()
+          Game()
           redraw(controller.getPlayBoard().getactivePlayer())
         })
 
       }
 
     }
+    visible = true
+    centerOnScreen()
   }
+
 
   def highlightpanel() = new FlowPanel {
     contents += Label1
@@ -140,10 +147,9 @@ class gui(controller: ControllerInterface) extends Frame {
   }
 
 
-
   def redraw(Position: Int) = {
     highlightpanel()
-    setUp()
+    Game()
     Label1.text = (controller.getPlayBoard().getPlayer(controller.getPlayBoard().getactivePlayer()).getName() + " hat "
       + controller.getPlayBoard().getPlayer(controller.getPlayBoard().getactivePlayer()).getWallet()
       + "$")
@@ -155,6 +161,70 @@ class gui(controller: ControllerInterface) extends Frame {
       }
     }
     repaint()
+
+  }
+
+  def PlayerCount(): Unit = {
+
+    frame = new MainFrame() {
+      title = "Spielereingabe"
+      size = new Dimension(1400, 700)
+      contents = new BoxPanel(Orientation.Vertical) {
+        for (i <- 1 to 4) {
+          val button = new Button(i.toString) {
+            reactions += {
+              case ButtonClicked(_) => println(i + " Spieler ausgewählt")
+                SetupPlayer(i)
+                close()
+            }
+          }
+          contents += button
+        }
+        val button = new Button("exit") {
+          reactions += {
+            case ButtonClicked(_) => close()
+          }
+        }
+        contents += button
+        border = Swing.EmptyBorder(10, 100, 10, 100)
+        centerOnScreen()
+      }
+    }
+    frame.visible = true
+    centerOnScreen()
+  }
+
+  def SetupPlayer(PlayerCount: Int): Unit = {
+    val players = new Array[Player](PlayerCount)
+    var ii = 0
+    val frame = new MainFrame() {
+      title = "Spielereingabe"
+      size = new Dimension(1400, 700)
+      contents = new BoxPanel(Orientation.Vertical) {
+        val textField1 = new TextField("Playername")
+        val textField2 = new TextField("Walletsize")
+        contents += textField1
+        contents += textField2
+        val button = new Button("bestätigen") {
+          reactions += {
+            case ButtonClicked(_) => println(textField1.text + " hat " + textField2.text + " $$$$")
+              players(ii) = controller.createPlayer(textField1.text, textField2.text.toInt)
+              ii += 1
+              if (ii == PlayerCount) {
+                controller.createBoard(PlayerCount, players)
+                Game()
+                close()
+              }
+          }
+        }
+        contents += button
+
+        border = Swing.EmptyBorder(10, 100, 10, 100)
+        centerOnScreen()
+      }
+    }
+    frame.visible = true
+    centerOnScreen()
 
   }
 
