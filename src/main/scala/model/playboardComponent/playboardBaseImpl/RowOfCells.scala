@@ -1,10 +1,9 @@
-package model
+package model.playboardComponent.playboardBaseImpl
 
 import java.awt.Color
 
-case class RowOfCells(playerColor:Color,arr:Array[Cell]) {
 
-  val r = scala.util.Random
+case class RowOfCells(playerColor:Color,arr:Array[Cell]) {
 
   def setColor(amount: Int):Color = {
     if(amount % 14 == 0) {
@@ -35,12 +34,14 @@ case class RowOfCells(playerColor:Color,arr:Array[Cell]) {
     }
   }
 
-  def setCell(number: Int): Unit = {
+  def setCell(number: Int): Cell = {
     arr(number) = arr(number).setSet()
+    arr(number)
   }
 
-  def unsetCell(number:Int): Unit = {
+  def unsetCell(number:Int): Cell = {
     arr(number) = arr(number).unsetSet()
+    arr(number)
   }
 
   def getCell(number: Int): Cell = {

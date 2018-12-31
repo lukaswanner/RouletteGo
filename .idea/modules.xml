@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/roulettego.iml" filepath="$PROJECT_DIR$/.idea/modules/roulettego.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/RouletteGo.iml" filepath="$PROJECT_DIR$/.idea/modules/RouletteGo.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/roulettego-build.iml" filepath="$PROJECT_DIR$/.idea/modules/roulettego-build.iml" />
     </modules>
   </component>

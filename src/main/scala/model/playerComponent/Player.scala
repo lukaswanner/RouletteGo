@@ -1,9 +1,7 @@
-package model
+package model.playerComponent
 
-import controller.{SetCommand, controller}
-import util.UndoManager
 
-case class Player(Name:String,Wallet:Int) {
+case class Player(Name:String,Wallet:Int){
   //override def toString:String = Name
 
   def minus(Amount:Int): Player = {
