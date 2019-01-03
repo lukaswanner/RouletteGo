@@ -13,10 +13,11 @@ class controller extends ControllerInterface {
   val r = scala.util.Random
   var random: Int = 0
 
-  def createBoard(PlayerCount: Int, players: Array[Player]): Unit = {
+  def createBoard(PlayerCount: Int, players: Array[Player]): Playboard = {
     playboard = new Playboard(range + 1, players)
     playboard.active(0) = true
     publish(new GameStart)
+    playboard
   }
 
 
@@ -60,9 +61,10 @@ class controller extends ControllerInterface {
     return false
   }
 
-  def resize(newRange: Int): Unit = {
+  def resize(newRange: Int): Int = {
     range = newRange - 1
     createBoard(getPlayerCount(), getPlayBoard().Players)
+    range
   }
 
   def getRange(): Int = {

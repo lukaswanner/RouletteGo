@@ -8,7 +8,7 @@ import scala.swing.Publisher
 
 trait ControllerInterface extends Publisher{
 
-  def createBoard(PlayerCount: Int, players: Array[Player]): Unit
+  def createBoard(PlayerCount: Int, players: Array[Player]): Playboard
 
   def getRandom(): Int
 
@@ -23,7 +23,7 @@ trait ControllerInterface extends Publisher{
   def Step(Position: Int,input:String): Boolean
 
 
-  def resize(newRange: Int): Unit
+  def resize(newRange: Int): Int
 
   def getRange():Int
 
