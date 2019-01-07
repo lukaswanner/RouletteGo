@@ -40,7 +40,7 @@ class ControllerSpec extends WordSpec with Matchers {
       playboard1 = controller.getPlayBoard()
       "playercount should be 1 and the size should be 4 playboard1 needs to be reasigned because we changed the size" in {
         playercount should be (1)
-        size should be (4)
+        size should be (3)
         playboard1 should be (controller.getPlayBoard())
       }
       /*var booleanSet = controller.Step(0,"10")

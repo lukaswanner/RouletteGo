@@ -28,6 +28,7 @@ class gui(controller: ControllerInterface) extends Frame {
     case e: CellChanged => redraw(controller.getPlayBoard().getactivePlayer())
     case g: GameStart => frame.close()
       Game()
+      redraw(controller.getPlayBoard().getactivePlayer())
   }
 
   //redraw(controller.getPlayBoard().getactivePlayer())
@@ -148,8 +149,8 @@ class gui(controller: ControllerInterface) extends Frame {
 
 
   def redraw(Position: Int) = {
-    highlightpanel()
-    Game()
+    //highlightpanel()
+    //Game()
     Label1.text = (controller.getPlayBoard().getPlayer(controller.getPlayBoard().getactivePlayer()).getName() + " hat "
       + controller.getPlayBoard().getPlayer(controller.getPlayBoard().getactivePlayer()).getWallet()
       + "$")

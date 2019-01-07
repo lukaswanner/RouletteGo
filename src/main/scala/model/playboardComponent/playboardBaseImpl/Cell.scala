@@ -28,15 +28,12 @@ case class Cell(value: Int, color: Color,set:Boolean) extends CellInterface {
     Cell(value,color,false)
   }
 
- /* override def toString = {
-    if(color.getRGB.equals(-16777216)) {
-      s"The color is black."
-    }else if(color.getRGB.equals(-65536)) {
-      s"The color is red."
-    }else {
-      s"The color is green."
-    }
-  }
-  */
 
 }
+
+object Cell {
+  import play.api.libs.json._
+   //val cellWrites = Json.writes[Cell]
+   //val cellReads = Json.reads[Cell]
+}
+

@@ -103,5 +103,11 @@ case class Playboard(AmountofCells: Int, Players: Array[Player]) extends playboa
     }
     return 0
   }
+}
 
+
+  object Playboard {
+  import play.api.libs.json._
+    implicit val playWrites = Json.writes[Playboard]
+    implicit val playReads = Json.reads[Playboard]
 }
