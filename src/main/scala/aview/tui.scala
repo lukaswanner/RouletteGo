@@ -4,7 +4,7 @@ import java.awt.Color
 
 import controller.controllerBaseImpl.controller
 import _root_.controller.{CellChanged, GameStart}
-import model.fileIoComponent.fileIoJsonImpl.FileIO
+import model.fileIoComponent.fileIoXmlImpl.FileIO
 import util.{Observer, UndoManager}
 import model.playboardComponent.playboardBaseImpl.{RowOfCells, Solver}
 import model.playerComponent.Player

@@ -11,7 +11,7 @@ class FileIO extends FileIOInterface {
 
   override def load: Playboard = {
     var playboard: Playboard = null
-    val source: String = Source.fromFile("C:\\Users\\lu851wan\\IdeaProjects\\RouletteGo\\src\\main\\scala\\JSONFILE\\test.json").getLines().mkString
+    val source: String = Source.fromFile("C:\\Users\\lu851wan\\IdeaProjects\\RouletteGo\\src\\main\\scala\\FILES\\test.json").getLines().mkString
     val json: JsValue = Json.parse(source)
     val playerCount = (json \ "playboard" \ "Playercount").get.toString().toInt
     val playernameArray = (json \ "playboard" \ "Playername")
