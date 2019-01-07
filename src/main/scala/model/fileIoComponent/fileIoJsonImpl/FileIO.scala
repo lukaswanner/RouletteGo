@@ -7,7 +7,7 @@ import play.api.libs.json.{JsNumber, JsString, JsValue, Json}
 
 import scala.io._
 
-class FileIo extends FileIOInterface {
+class FileIO extends FileIOInterface {
 
   override def load: Playboard = {
     var playboard: Playboard = null

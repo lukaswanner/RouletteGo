@@ -4,7 +4,7 @@ import java.awt.Color
 
 import controller.controllerBaseImpl.controller
 import _root_.controller.{CellChanged, GameStart}
-import model.fileIoComponent.fileIoJsonImpl.FileIo
+import model.fileIoComponent.fileIoJsonImpl.FileIO
 import util.{Observer, UndoManager}
 import model.playboardComponent.playboardBaseImpl.{RowOfCells, Solver}
 import model.playerComponent.Player
@@ -137,9 +137,9 @@ class tui(acontroller: controller) extends Reactor {
         acontroller.getNewRandom(14)
       case "step" => acontroller.Step(Position, getInput(Position))
       case "exit" => setFinished(true)
-      case "json" => var t = new FileIo
+      case "json" => var t = new FileIO
         t.load
-      case "json s" => var t = new FileIo
+      case "json s" => var t = new FileIO
         t.save(acontroller.playboard)
       case "resize" => var input = readLine().toInt
         acontroller.resize(input)
