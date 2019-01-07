@@ -28,9 +28,9 @@ class gui(controller: ControllerInterface) extends Frame {
     case e: CellChanged => redraw(controller.getPlayBoard().getactivePlayer())
     case g: GameStart => frame.close()
       Game()
+      redraw(controller.getPlayBoard().getactivePlayer())
   }
 
-  //redraw(controller.getPlayBoard().getactivePlayer())
   visible = true
   centerOnScreen()
   repaint()
@@ -70,9 +70,9 @@ class gui(controller: ControllerInterface) extends Frame {
           var solver = new Solver(controller.getPlayBoard())
           if (solver.checkforWin(controller.getRandom(), controller.getPlayBoard().getactivePlayer())) {
             controller.getNewRandom(controller.getRange())
-            statusline.text = "Gewonnen !"
+            statusline.text = "Gewonnen ! die korrekte Zahl war : " + controller.getRandom()
           } else {
-            statusline.text = "Verloren !"
+            statusline.text = "Verloren ! die korrekte Zahl war : " + controller.getRandom()
           }
           for (i <- 0 until controller.getPlayBoard().Players.length) {
             controller.getPlayBoard().undo(i) = new UndoManager
@@ -125,6 +125,7 @@ class gui(controller: ControllerInterface) extends Frame {
     }
     visible = true
     centerOnScreen()
+    repaint()
   }
 
 
@@ -148,8 +149,8 @@ class gui(controller: ControllerInterface) extends Frame {
 
 
   def redraw(Position: Int) = {
-    highlightpanel()
-    Game()
+    //highlightpanel()
+    //Game()
     Label1.text = (controller.getPlayBoard().getPlayer(controller.getPlayBoard().getactivePlayer()).getName() + " hat "
       + controller.getPlayBoard().getPlayer(controller.getPlayBoard().getactivePlayer()).getWallet()
       + "$")
