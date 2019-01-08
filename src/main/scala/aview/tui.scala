@@ -4,7 +4,8 @@ import java.awt.Color
 
 import controller.controllerBaseImpl.controller
 import _root_.controller.{CellChanged, GameStart}
-import model.fileIoComponent.fileIoXmlImpl.FileIO
+import model.fileIoComponent.fileIoJsonImpl.FileIO
+//import model.fileIoComponent.fileIoXmlImpl.FileIO
 import util.{Observer, UndoManager}
 import model.playboardComponent.playboardBaseImpl.{RowOfCells, Solver}
 import model.playerComponent.Player
@@ -137,15 +138,19 @@ class tui(acontroller: controller) extends Reactor {
         acontroller.getNewRandom(14)
       case "step" => acontroller.Step(Position, getInput(Position))
       case "exit" => setFinished(true)
-      case "json" => var t = new FileIO
-        t.load
-      case "json s" => var t = new FileIO
-        t.save(acontroller.playboard)
-      case "resize" => var input = readLine().toInt
+      case "json" => val js = new FileIO
+        js.load
+      case "json s" => val js = new FileIO
+        js.save(acontroller.playboard)
+      case "XML" => val xml = new FileIO
+        xml.load
+      case "XML s" => val xml = new FileIO
+        xml.save(acontroller.playboard)
+      case "resize" => val input = readLine().toInt
         acontroller.resize(input)
         acontroller.getNewRandom(input)
       case "solve" => var solver = new Solver(acontroller.getPlayBoard())
-        for (i <- 0 until acontroller.getPlayBoard().Players.length) {
+        for (i <- 0 until acontroller.getPlayerCount()) {
           acontroller.getPlayBoard().undo(i) = new UndoManager
         }
         if (solver.checkforWin(acontroller.getRandom(), Position)) {
@@ -153,8 +158,8 @@ class tui(acontroller: controller) extends Reactor {
         } else {
           println(acontroller.getPlayBoard().getPlayer(Position) + "hat verloren!")
         }
-        acontroller.getPlayBoard().refreshOne(Position)
-      case "reset" => acontroller.getPlayBoard().refresh()
+        acontroller.setPlayBoard(acontroller.getPlayBoard().refreshOne(Position))
+      case "reset" => acontroller.setPlayBoard(acontroller.getPlayBoard().refresh())
         setFinished(false)
       case default => println("Falsche eingabe")
     }

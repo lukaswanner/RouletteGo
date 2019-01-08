@@ -47,6 +47,10 @@ case class Playboard(AmountofCells: Int, Players: Array[Player]) extends playboa
     return Playboard(AmountofCells, Players)
   }
 
+  def getPlayerCount(): Int = {
+    Players.length
+  }
+
   def getAmountofCells(): Int = {
     AmountofCells
   }
@@ -54,35 +58,38 @@ case class Playboard(AmountofCells: Int, Players: Array[Player]) extends playboa
   def PlayerStep(PlayerPosition: Int, input: String, Set: Boolean): Playboard = {
     if (Set) {
       Players(PlayerPosition) = Players(PlayerPosition).minus(100)
-      println("Wallet: " + getPlayer(PlayerPosition).getWallet())
       row(PlayerPosition).setCell(input.toInt)
       return this
     } else {
       Players(PlayerPosition) = Players(PlayerPosition).plus(100)
-      println("Wallet: " + getPlayer(PlayerPosition).getWallet())
       row(PlayerPosition).unsetCell(input.toInt)
       return this
     }
   }
 
 
-  def refresh(): Unit = {
+  def refresh(): Playboard = {
+    val newPlayboard = copy(this.getAmountofCells(), this.Players)
     for (i <- 0 until Players.length) {
-      row(i).setAmountOfRows(AmountofCells)
+      newPlayboard.row(i).setAmountOfRows(AmountofCells)
     }
+    newPlayboard
   }
 
-  def refreshOne(Position: Int): Unit = {
-    row(Position).setAmountOfRows(AmountofCells)
-
+  def refreshOne(Position: Int): Playboard = {
+    val newPlayboard = copy(this.getAmountofCells(), this.Players)
+    newPlayboard.row(Position).setAmountOfRows(AmountofCells)
+    newPlayboard
   }
 
-  def Step(Position: Int, input: String, acontroller: controller): Unit = {
+  def Step(Position: Int, input: String, acontroller: controller): Boolean = {
     undo(Position).doStep(new SetCommand(Position, input, acontroller))
+    true
   }
 
-  def undoStep(Position: Int): Unit = {
+  def undoStep(Position: Int): Boolean = {
     undo(Position).undoStep()
+    true
   }
 
   def activatePlayer(Position: Int): Boolean = {
@@ -92,7 +99,12 @@ case class Playboard(AmountofCells: Int, Players: Array[Player]) extends playboa
     } else {
       active(Position + 1) = true
     }
-    true
+    for (i<- 1 until active.length) {
+      if(active(i)) {
+        return true
+      }
+    }
+    return false
   }
 
   def getactivePlayer(): Int = {
@@ -105,9 +117,11 @@ case class Playboard(AmountofCells: Int, Players: Array[Player]) extends playboa
   }
 }
 
-
+/*
   object Playboard {
   import play.api.libs.json._
     implicit val playWrites = Json.writes[Playboard]
     implicit val playReads = Json.reads[Playboard]
 }
+
+*/

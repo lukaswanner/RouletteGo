@@ -31,9 +31,4 @@ case class Cell(value: Int, color: Color,set:Boolean) extends CellInterface {
 
 }
 
-object Cell {
-  import play.api.libs.json._
-   //val cellWrites = Json.writes[Cell]
-   //val cellReads = Json.reads[Cell]
-}
 

@@ -3,7 +3,7 @@ package model.playboardComponent
 import java.awt.Color
 
 import controller.controllerBaseImpl.controller
-import model.playboardComponent.playboardBaseImpl.RowOfCells
+import model.playboardComponent.playboardBaseImpl.{Playboard, RowOfCells}
 import model.playerComponent.Player
 
 trait playboardInterface {
@@ -22,13 +22,13 @@ trait playboardInterface {
   def PlayerStep(PlayerPosition:Int,input:String,Set: Boolean):playboardInterface
 
 
-  def refresh(): Unit
+  def refresh(): Playboard
 
-  def refreshOne(Position:Int): Unit
+  def refreshOne(Position:Int): Playboard
 
-  def Step(Position:Int,input:String,acontroller:controller): Unit
+  def Step(Position:Int,input:String,acontroller:controller): Boolean
 
-  def undoStep(Position:Int): Unit
+  def undoStep(Position:Int): Boolean
 
 
 }

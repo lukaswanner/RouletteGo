@@ -9,10 +9,14 @@ class SolverSpec extends WordSpec with Matchers {
       Players(0) = new Player("lukas",1000)
       val newplayboard = new Playboard(14, Players)
       newplayboard.PlayerStep(0, "10", true)
-      var solver = new Solver(newplayboard)
-      var boolean = solver.checkforWin(10,0)
+      val solver = new Solver(newplayboard)
+      val booleanTrue = solver.checkforWin(10,0)
       "have value true" in {
-        boolean should be(true)
+        booleanTrue should be(true)
+      }
+      val booleanFalse = solver.checkforWin(9,0)
+      "have value false" in {
+        booleanFalse should be(false)
       }
 
     }

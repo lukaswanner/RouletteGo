@@ -47,6 +47,10 @@ class RowOfCellsSpec extends WordSpec with Matchers {
         val greenRow = row.setPlayerColor("green")
         greenRow.playerColor should be(Color.green)
       }
+      "have the color null" in {
+        val greenRow = row.setPlayerColor("pink")
+        greenRow.playerColor should be(null)
+      }
     }
 
     "setting a single cell" should {

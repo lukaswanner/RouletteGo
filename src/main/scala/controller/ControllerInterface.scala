@@ -18,6 +18,8 @@ trait ControllerInterface extends Publisher{
 
   def getPlayBoard(): Playboard
 
+  def setPlayBoard(newPlayboard:Playboard): Playboard
+
   def getPlayerCount(): Int
 
   def Step(Position: Int,input:String): Boolean

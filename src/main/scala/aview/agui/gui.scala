@@ -5,6 +5,8 @@ import model.playboardComponent.playboardBaseImpl.Solver
 import util.UndoManager
 import model.playerComponent.Player
 
+import model.fileIoComponent.fileIoJsonImpl.FileIO
+
 import scala.swing._
 import scala.swing.Swing.LineBorder
 import scala.swing.event._
@@ -49,7 +51,7 @@ class gui(controller: ControllerInterface) extends Frame {
       contents += new Menu("File") {
         mnemonic = Key.F
         contents += new MenuItem(Action("New") {
-          controller.getPlayBoard().refresh()
+          controller.setPlayBoard(controller.getPlayBoard().refresh())
           redraw(controller.getPlayBoard().getactivePlayer())
         })
         contents += new MenuItem(Action("Quit") {
@@ -75,10 +77,10 @@ class gui(controller: ControllerInterface) extends Frame {
           } else {
             statusline.text = "Verloren !"
           }
-          for (i <- 0 until controller.getPlayBoard().Players.length) {
+          for (i <- 0 until controller.getPlayerCount()) {
             controller.getPlayBoard().undo(i) = new UndoManager
           }
-          controller.getPlayBoard().refreshOne(controller.getPlayBoard().getactivePlayer())
+          controller.setPlayBoard(controller.getPlayBoard().refreshOne(controller.getPlayBoard().getactivePlayer()))
           redraw(controller.getPlayBoard().getactivePlayer())
         })
       }
@@ -86,6 +88,22 @@ class gui(controller: ControllerInterface) extends Frame {
         mnemonic = Key.O
         contents += new MenuItem(Action("Refresh") {
           redraw(controller.getPlayBoard().getactivePlayer())
+        })
+        contents += new MenuItem(Action("read JSON") {
+          val js = new FileIO
+          js.load
+        })
+        contents += new MenuItem(Action("read XML") {
+          val xml = new FileIO
+          xml.load
+        })
+        contents += new MenuItem(Action("save JSON") {
+          val js = new FileIO
+          js.save(controller.getPlayBoard())
+        })
+        contents += new MenuItem(Action("save XML") {
+          val xml = new FileIO
+          xml.save(controller.getPlayBoard())
         })
         contents += new MenuItem(Action("Size of 1") {
           controller.resize(1)

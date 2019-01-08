@@ -22,8 +22,10 @@ case class Player(Name:String,Wallet:Int) {
 
 }
 
+/*
 object Player {
   import play.api.libs.json._
   implicit val playerWrites = Json.writes[Player]
   implicit val playerReads = Json.reads[Player]
 }
+*/

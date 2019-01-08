@@ -32,6 +32,7 @@ class controller extends ControllerInterface {
     return random
   }
 
+
   def setRange(newRange: Int): Int = {
     range = newRange
     return range
@@ -39,6 +40,11 @@ class controller extends ControllerInterface {
 
   def getPlayBoard(): Playboard = {
     playboard
+  }
+
+  def setPlayBoard(newPlayboard:Playboard): Playboard = {
+    this.playboard = newPlayboard
+    newPlayboard
   }
 
   def getPlayerCount(): Int = {
