@@ -12,7 +12,7 @@ case class Cell(value: Int, color: Color,set:Boolean) extends CellInterface {
   }
 
   def getColor():Color = {
-    return color
+    color
   }
 
 
@@ -21,11 +21,11 @@ case class Cell(value: Int, color: Color,set:Boolean) extends CellInterface {
   }
 
   def setSet(): Cell = {
-    Cell(value,color,true)
+    Cell(value,color,set = true)
   }
 
   def unsetSet(): Cell = {
-    Cell(value,color,false)
+    Cell(value,color,set = false)
   }
 
 
