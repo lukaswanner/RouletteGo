@@ -73,9 +73,9 @@ class gui(controller: ControllerInterface) extends Frame {
           var solver = new Solver(controller.getPlayBoard())
           if (solver.checkforWin(controller.getRandom(), controller.getPlayBoard().getactivePlayer())) {
             controller.getNewRandom(controller.getRange())
-            statusline.text = "Gewonnen !"
+            statusline.text = "Gewonnen ! Die richtige Zahl war: " + controller.getRandom()
           } else {
-            statusline.text = "Verloren !"
+            statusline.text = "Verloren ! Die richtige Zahl war: " + controller.getRandom()
           }
           for (i <- 0 until controller.getPlayerCount()) {
             controller.getPlayBoard().undo(i) = new UndoManager
