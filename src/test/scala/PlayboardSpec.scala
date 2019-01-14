@@ -38,6 +38,8 @@ class PlayboardSpec extends WordSpec with Matchers {
         amount should be(playboard.AmountofCells)
       }
       "have a new player when set to " in {
+        val oldplayer = playboard.getPlayer(0)
+        playboard.getPlayer(0) should be (oldplayer)
         val newPlayer = Player("Hans", 1000)
         val newPlayerPlayboard = playboard.setPlayer(0, newPlayer)
         newPlayerPlayboard.getPlayer(0) should be(newPlayer)
@@ -72,6 +74,7 @@ class PlayboardSpec extends WordSpec with Matchers {
         controller.setPlayBoard(playboard)
         playboard.Step(0, "4", controller) should be(true)
         playboard.undoStep(0) should be(true)
+        playboard.redoStep(0) should be (true)
       }
 
       "be true the active player is 1 or higher and false if hes 0" in {

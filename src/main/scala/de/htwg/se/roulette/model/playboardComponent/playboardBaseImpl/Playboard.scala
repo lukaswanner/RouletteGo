@@ -113,12 +113,13 @@ case class Playboard(AmountofCells: Int, Players: Array[Player]) extends playboa
   }
 
   def getactivePlayer(): Int = {
+    var active = 0
     for (i <- 0 until active.length) {
       if (active(i)) {
-        return i
+        active = i
       }
     }
-    return 0
+    return active
   }
 }
 
