@@ -39,7 +39,9 @@ class PlayboardSpec extends WordSpec with Matchers {
       }
       "have a new player when set to " in {
         val oldplayer = playboard.getPlayer(0)
-        playboard.getPlayer(0) should be (oldplayer)
+        val oldplayboard = playboard.setPlayer(10,new Player("tim",100))
+        oldplayboard.getPlayer(0) should be (oldplayer)
+        oldplayboard.getPlayerCount() should be(2)
         val newPlayer = Player("Hans", 1000)
         val newPlayerPlayboard = playboard.setPlayer(0, newPlayer)
         newPlayerPlayboard.getPlayer(0) should be(newPlayer)

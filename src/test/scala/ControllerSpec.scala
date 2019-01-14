@@ -68,6 +68,23 @@ class ControllerSpec extends WordSpec with Matchers {
       "be false since we dont have money left to bet" in {
         noMoney should be (false)
       }
+      val undoStep = controller2.undo(0)
+      "be true since we have a value to undo" in {
+        undoStep should be(true)
+      }
+      val undoStepfalse = controller2.undo(10)
+      "be false since we dont have a player at that pos" in {
+        undoStepfalse should be(false)
+      }
+      val redoStep = controller2.redo(0)
+      "be true since we have a value to redo" in {
+        redoStep should be(true)
+      }
+      val redoFalse = controller2.redo(10)
+      "be false since we dont have a player at that pos to do redo for" in {
+        redoFalse should be(false)
+      }
+
 
     }
 
