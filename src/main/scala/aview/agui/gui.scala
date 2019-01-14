@@ -34,7 +34,6 @@ class gui(controller: ControllerInterface) extends Frame {
   }
 
   //redraw(controller.getPlayBoard().getactivePlayer())
-  visible = true
   centerOnScreen()
   repaint()
 
@@ -64,7 +63,7 @@ class gui(controller: ControllerInterface) extends Frame {
           controller.undo(controller.getPlayBoard().getactivePlayer())
         })
         contents += new MenuItem(Action("Redo") {
-          controller.undo(controller.getPlayBoard().getactivePlayer())
+          controller.redo(controller.getPlayBoard().getactivePlayer())
         })
       }
       contents += new Menu("Solve") {
@@ -206,11 +205,10 @@ class gui(controller: ControllerInterface) extends Frame {
         }
         contents += button
         border = Swing.EmptyBorder(10, 100, 10, 100)
-        centerOnScreen()
       }
     }
+    frame.centerOnScreen()
     frame.visible = true
-    centerOnScreen()
   }
 
   def SetupPlayer(PlayerCount: Int): Unit = {
@@ -239,11 +237,10 @@ class gui(controller: ControllerInterface) extends Frame {
         contents += button
 
         border = Swing.EmptyBorder(10, 100, 10, 100)
-        centerOnScreen()
       }
     }
     frame.visible = true
-    centerOnScreen()
+    frame.centerOnScreen()
 
   }
 

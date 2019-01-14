@@ -92,6 +92,11 @@ case class Playboard(AmountofCells: Int, Players: Array[Player]) extends playboa
     true
   }
 
+  def redoStep(Position: Int): Boolean = {
+    undo(Position).redoStep
+    true
+  }
+
   def activatePlayer(Position: Int): Boolean = {
     active(Position) = false
     if (Position + 1 >= active.length) {

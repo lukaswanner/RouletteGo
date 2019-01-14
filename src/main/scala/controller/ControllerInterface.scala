@@ -31,6 +31,8 @@ trait ControllerInterface extends Publisher{
 
   def undo(Position: Int): Unit
 
+  def redo(Position: Int): Unit
+
 
   def createPlayer(Name: String, Wallet: Int): Player
 

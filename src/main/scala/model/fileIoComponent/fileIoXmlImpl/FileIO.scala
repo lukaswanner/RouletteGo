@@ -10,7 +10,7 @@ import scala.xml.{Elem, PrettyPrinter}
 class FileIO extends FileIOInterface {
   override def load: Playboard = {
     var playboard: Playboard = null
-    val file = scala.xml.XML.loadFile("C:\\Users\\Lukas\\RouletteGo\\src\\main\\scala\\FILES\\test.xml")
+    val file = scala.xml.XML.loadFile("C:\\Users\\lu851wan\\IdeaProjects\\RouletteGo\\src\\main\\scala\\FILES\\test.xml")
     val playerCount = (file \\ "Playercount").text.toInt
     val playernameArray = (file \\ "Playername").text.toString
     val playerWalletArray = (file \\ "PlayerWallet").text.toString
@@ -37,7 +37,7 @@ class FileIO extends FileIOInterface {
 
   override def save(playboard: Playboard): Unit = {
     import java.io._
-    val pw = new PrintWriter(new File("C:\\Users\\Lukas\\RouletteGo\\src\\main\\scala\\FILES\\test.xml"))
+    val pw = new PrintWriter(new File("C:\\Users\\lu851wan\\IdeaProjects\\RouletteGo\\src\\main\\scala\\FILES\\test.xml"))
     val prettyPrinter = new PrettyPrinter(120, 4)
     val xml = prettyPrinter.format(playboardtoXML(playboard))
     pw.write(xml)

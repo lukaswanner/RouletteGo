@@ -129,6 +129,7 @@ class tui(acontroller: controller) extends Reactor {
           acontroller.createBoard(i, createPlayer(Amount))
         }
       case "undo" => acontroller.undo(Position)
+      case "redo" => acontroller.redo(Position)
       case "refresh" => update
       case "." => acontroller.resize(1)
         acontroller.getNewRandom(1)

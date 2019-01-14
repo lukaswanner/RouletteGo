@@ -82,6 +82,11 @@ class controller extends ControllerInterface {
     publish(new CellChanged)
   }
 
+  def redo(Position: Int): Unit = {
+    playboard.redoStep(Position)
+    publish(new CellChanged)
+  }
+
 
   def createPlayer(Name: String, Wallet: Int): Player = {
     return Player(Name, Wallet)

@@ -11,7 +11,7 @@ class FileIO extends FileIOInterface {
 
   override def load: Playboard = {
     var playboard: Playboard = null
-    val source: String = Source.fromFile("C:\\Users\\Lukas\\RouletteGo\\src\\main\\scala\\FILES\\test.json").getLines().mkString
+    val source: String = Source.fromFile("C:\\Users\\lu851wan\\IdeaProjects\\RouletteGo\\src\\main\\scala\\FILES\\test.json").getLines().mkString
     val json: JsValue = Json.parse(source)
     val playerCount = (json \ "playboard" \ "Playercount").get.toString().toInt
     val playernameArray = (json \ "playboard" \ "Playername")
@@ -31,7 +31,7 @@ class FileIO extends FileIOInterface {
 
   override def save(playboard: Playboard): Unit = {
     import java.io._
-    val pw = new PrintWriter(new File("C:\\Users\\Lukas\\RouletteGo\\src\\main\\scala\\FILES\\test.json"))
+    val pw = new PrintWriter(new File("C:\\Users\\lu851wan\\IdeaProjects\\RouletteGo\\src\\main\\scala\\FILES\\test.json"))
     pw.write(Json.prettyPrint(playboardtoJson(playboard)))
     pw.close
     println("finished writing")
