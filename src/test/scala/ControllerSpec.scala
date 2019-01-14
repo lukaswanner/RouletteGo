@@ -20,13 +20,13 @@ class ControllerSpec extends WordSpec with Matchers {
         newrange should be (12)
       }
       val random = controller.getRandom()
-      val range = controller.setRange(1)
+      val range = controller.setRange(0)
       val newRandom = controller.getNewRandom(range)
 
       "random should be 0(again default value) and newRandom should be 1 since the range is 1, range it self should be 1 " in {
         random should be (0)
         newRandom should be (1)
-        range should be(1)
+        range should be(0)
       }
 
       val Players = new Array[Player](1)

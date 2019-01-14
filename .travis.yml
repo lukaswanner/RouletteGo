@@ -1,6 +1,6 @@
 language: scala
 scala: - 2.12.7
 
-script: - sbt clean coverage test coverageReport
+script: - sbt ++$TRAVIS_SCALA_VERSION test
 
 after_success: - sbt coverageReport coveralls
