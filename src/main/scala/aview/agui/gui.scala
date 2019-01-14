@@ -224,7 +224,7 @@ class gui(controller: ControllerInterface) extends Frame {
         contents += textField2
         val button = new Button("bestätigen") {
           reactions += {
-            case ButtonClicked(_) => println(textField1.text + " hat " + textField2.text + " $$$$")
+            case ButtonClicked(_) => println(textField1.text + " hat " + textField2.text + " $$$")
               players(ii) = controller.createPlayer(textField1.text, textField2.text.toInt)
               ii += 1
               if (ii == PlayerCount) {
@@ -239,6 +239,7 @@ class gui(controller: ControllerInterface) extends Frame {
         border = Swing.EmptyBorder(10, 100, 10, 100)
       }
     }
+
     frame.visible = true
     frame.centerOnScreen()
 
