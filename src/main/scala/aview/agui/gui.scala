@@ -5,7 +5,7 @@ import model.playboardComponent.playboardBaseImpl.Solver
 import util.UndoManager
 import model.playerComponent.Player
 
-import model.fileIoComponent.fileIoJsonImpl.FileIO
+import model.fileIoComponent.fileIoXmlImpl.FileIO
 
 import scala.swing._
 import scala.swing.Swing.LineBorder

@@ -11,7 +11,7 @@ class FileIO extends FileIOInterface {
   override def load: Playboard = {
     var playboard: Playboard = null
     val file = scala.xml.XML.loadFile("C:\\Users\\lu851wan\\IdeaProjects\\RouletteGo\\src\\main\\scala\\FILES\\test.xml")
-    val playerCount = (file \\ "Playercount").text.toInt
+    val playerCount = (file \\ "Playercount").text.toString.toInt
     val playernameArray = (file \\ "Playername").text.toString
     val playerWalletArray = (file \\ "PlayerWallet").text.toString
 
@@ -19,12 +19,8 @@ class FileIO extends FileIOInterface {
 
     var Wallet = playerWalletArray.split(",")
 
-    println(playerCount)
-    println(playernameArray)
-    println(playerWalletArray)
-
     val players = new Array[Player](playerCount)
-    for (i <- 0 until playerCount.toInt) {
+    for (i <- 0 until playerCount) {
       var name = Names(i)
       var wallet = Wallet(i)
       println(name + " " + wallet)
@@ -41,7 +37,7 @@ class FileIO extends FileIOInterface {
     val prettyPrinter = new PrettyPrinter(120, 4)
     val xml = prettyPrinter.format(playboardtoXML(playboard))
     pw.write(xml)
-    println("finished writing")
+    println("finished writing xml")
     pw.close
   }
 
@@ -57,15 +53,9 @@ class FileIO extends FileIOInterface {
       }
     }
     <playboard>
-      <Playercount>
-        {playboard.getPlayerCount().toString}
-      </Playercount>
-      <Playername>
-        {strNames.toString()}
-      </Playername>
-      <PlayerWallet>
-        {strWallet.toString()}
-      </PlayerWallet>
+      <Playercount>{playboard.getPlayerCount().toString}</Playercount>
+      <Playername>{strNames.toString()}</Playername>
+      <PlayerWallet>{strWallet.toString()}</PlayerWallet>
     </playboard>
   }
 

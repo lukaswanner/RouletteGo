@@ -2,6 +2,9 @@ language: scala
 scala:
 - 2.12.7
 
+service_name: travis-pro
+repo_token: FD20AsOEjb7vytue70n8PMqZxqM9Dm8XK
+
 script:
 - sbt clean coverage test coverageReport
 

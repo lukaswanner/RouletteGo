@@ -1,7 +1,7 @@
 {
   "playboard" : {
     "Playercount" : 1,
-    "Playername" : [ "Playername" ],
-    "PlayerWallet" : [ 600 ]
+    "Playername" : [ "Tim" ],
+    "PlayerWallet" : [ 99999 ]
   }
 }
