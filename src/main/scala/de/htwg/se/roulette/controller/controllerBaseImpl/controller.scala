@@ -57,7 +57,7 @@ class controller @Inject() extends ControllerInterface {
   }
 
   def Step(Position: Int, input: String): Boolean = {
-    if (input.toInt != 0 && playboard.getindvrow(Position).getCell(input.toInt).set != true) {
+    if (Position < getPlayerCount() && input.toInt != 0 && playboard.getindvrow(Position).getCell(input.toInt).set != true) {
       playboard.activatePlayer(Position)
       if (playboard.getPlayer(Position).getWallet() >= 100) {
         playboard.Step(Position, input, this)

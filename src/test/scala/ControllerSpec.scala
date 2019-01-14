@@ -48,17 +48,25 @@ class ControllerSpec extends WordSpec with Matchers {
 
     }
     val controller2 = new controller()
-    "using the step methods " should {
+    "using the step method " should {
       val Players = new Array[Player](1)
-      Players(0) = new Player("Lukas",2000)
+      Players(0) = new Player("Lukas",100)
       val playboard = controller2.createBoard(1,Players)
       val canStep = controller2.Step(0,"10")
-      "position 10 shoudl be true" in {
+      "return true since pos is valid and 10 isnt set yet" in {
         canStep should be (true)
       }
       val cantStep = controller2.Step(0,"10")
-      "position 10 shouldnt be true because its set already" in {
+      "return false because its set already" in {
         cantStep should be(false)
+      }
+      val PositioncantStep = controller2.Step(10,"10")
+      "return be false as well since we dont have pos 10" in {
+        PositioncantStep should be (false)
+      }
+      val noMoney = controller2.Step(0,"4")
+      "be false since we dont have money left to bet" in {
+        noMoney should be (false)
       }
 
     }
