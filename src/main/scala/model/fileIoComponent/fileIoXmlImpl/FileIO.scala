@@ -2,6 +2,7 @@ package model.fileIoComponent.fileIoXmlImpl
 
 import model.fileIoComponent.FileIOInterface
 import model.playboardComponent.playboardBaseImpl.Playboard
+import model.playboardComponent.playboardInterface
 import model.playerComponent.Player
 
 import scala.io.Source
@@ -31,7 +32,7 @@ class FileIO extends FileIOInterface {
     playboard
   }
 
-  override def save(playboard: Playboard): Unit = {
+  override def save(playboard: playboardInterface): Unit = {
     import java.io._
     val pw = new PrintWriter(new File("C:\\Users\\lu851wan\\IdeaProjects\\RouletteGo\\src\\main\\scala\\FILES\\test.xml"))
     val prettyPrinter = new PrettyPrinter(120, 4)
@@ -41,7 +42,7 @@ class FileIO extends FileIOInterface {
     pw.close
   }
 
-  def playboardtoXML(playboard: Playboard):Elem = {
+  def playboardtoXML(playboard: playboardInterface):Elem = {
     var strNames = new StringBuilder
     var strWallet = new StringBuilder
     for (i <- 0 until playboard.getPlayerCount()) {

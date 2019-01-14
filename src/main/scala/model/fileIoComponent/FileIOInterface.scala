@@ -1,11 +1,11 @@
 package model.fileIoComponent
 
-import model.playboardComponent.playboardBaseImpl.Playboard
+import model.playboardComponent.{playboardInterface}
 
 trait FileIOInterface {
 
-  def load: Playboard
-  def save(playboard: Playboard):Unit
+  def load: playboardInterface
+  def save(playboard: playboardInterface):Unit
 
 
 }

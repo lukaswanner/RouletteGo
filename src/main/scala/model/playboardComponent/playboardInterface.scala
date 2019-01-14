@@ -21,6 +21,7 @@ trait playboardInterface {
 
   def PlayerStep(PlayerPosition:Int,input:String,Set: Boolean):playboardInterface
 
+  def getPlayerCount():Int
 
   def refresh(): Playboard
 

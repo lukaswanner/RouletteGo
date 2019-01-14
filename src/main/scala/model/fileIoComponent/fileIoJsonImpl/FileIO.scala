@@ -2,6 +2,7 @@ package model.fileIoComponent.fileIoJsonImpl
 
 import model.fileIoComponent.FileIOInterface
 import model.playboardComponent.playboardBaseImpl.Playboard
+import model.playboardComponent.playboardInterface
 import model.playerComponent.Player
 import play.api.libs.json.{JsNumber, JsString, JsValue, Json}
 
@@ -29,7 +30,7 @@ class FileIO extends FileIOInterface {
     playboard
   }
 
-  override def save(playboard: Playboard): Unit = {
+  override def save(playboard: playboardInterface): Unit = {
     import java.io._
     val pw = new PrintWriter(new File("C:\\Users\\lu851wan\\IdeaProjects\\RouletteGo\\src\\main\\scala\\FILES\\test.json"))
     pw.write(Json.prettyPrint(playboardtoJson(playboard)))
@@ -37,15 +38,15 @@ class FileIO extends FileIOInterface {
     println("finished writing")
   }
 
-  def playboardtoJson(playboard: Playboard) = {
+  def playboardtoJson(playboard: playboardInterface) = {
     val Names = new Array[String](playboard.getPlayerCount())
     for (i <- 0 until playboard.getPlayerCount()) {
-      Names(i) = playboard.Players(i).Name
+      Names(i) = playboard.getPlayer(i).Name
     }
 
     val Wallet = new Array[Int]((playboard.getPlayerCount()))
     for (i <- 0 until playboard.getPlayerCount()) {
-      Wallet(i) = playboard.Players(i).Wallet
+      Wallet(i) = playboard.getPlayer(i).Wallet
     }
     Json.obj(
       "playboard" -> Json.obj(
