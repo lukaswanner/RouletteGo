@@ -1,5 +1,5 @@
-import model.playboardComponent.playboardBaseImpl.{Cell, Playboard, Solver}
-import model.playerComponent.Player
+import de.htwg.se.roulette.model.playboardComponent.playboardBaseImpl.{Cell, Playboard, Solver}
+import de.htwg.se.roulette.model.playerComponent.Player
 import org.scalatest.{Matchers, WordSpec}
 
 class SolverSpec extends WordSpec with Matchers {

@@ -1,5 +1,5 @@
 import org.scalatest.{Matchers, WordSpec}
-import util.UndoManager
+import de.htwg.se.roulette.util.UndoManager
 
 class UndoManagerSpec extends WordSpec with Matchers {
 

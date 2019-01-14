@@ -1,7 +1,7 @@
-import controller.controllerBaseImpl.controller
-import model.playboardComponent
+import de.htwg.se.roulette.controller.controllerBaseImpl.controller
+import de.htwg.se.roulette.model.playboardComponent
 import playboardComponent.playboardBaseImpl
-import model.playerComponent.Player
+import de.htwg.se.roulette.model.playerComponent.Player
 import org.scalatest.{Matchers, WordSpec}
 
 class PlayboardSpec extends WordSpec with Matchers {

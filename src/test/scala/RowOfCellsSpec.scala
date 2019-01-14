@@ -1,7 +1,7 @@
 import java.awt.Color
 
 import org.scalatest.{Matchers, WordSpec}
-import model.playboardComponent.playboardBaseImpl.{Cell, RowOfCells}
+import de.htwg.se.roulette.model.playboardComponent.playboardBaseImpl.{Cell, RowOfCells}
 
 class RowOfCellsSpec extends WordSpec with Matchers {
   "A RowOfCells " when {

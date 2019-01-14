@@ -1,6 +1,6 @@
-import controller.controllerBaseImpl.controller
-import model.playerComponent.Player
-import model.playboardComponent.playboardBaseImpl.Playboard
+import de.htwg.se.roulette.controller.controllerBaseImpl.controller
+import de.htwg.se.roulette.model.playerComponent.Player
+import de.htwg.se.roulette.model.playboardComponent.playboardBaseImpl.Playboard
 import org.scalatest.{Matchers, WordSpec}
 
 class ControllerSpec extends WordSpec with Matchers {
@@ -43,12 +43,12 @@ class ControllerSpec extends WordSpec with Matchers {
         size should be (3)
         playboard1 should be (controller.getPlayBoard())
       }
-      /*var booleanSet = controller.Step(0,"10")
+      /*var booleanSet = de.htwg.se.roulette.controller.Step(0,"10")
       "booleanSet should be true because nothing has been set before" in {
         booleanSet should be (true)
       }
 
-      booleanSet = controller.Step(0,"10")
+      booleanSet = de.htwg.se.roulette.controller.Step(0,"10")
       "now it should be false since we have set 10 before" in {
         booleanSet should be (false)
       }*/

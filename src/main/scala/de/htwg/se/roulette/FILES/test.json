@@ -1,0 +1,7 @@
+{
+  "playboard" : {
+    "Playercount" : 1,
+    "Playername" : [ "Playername" ],
+    "PlayerWallet" : [ 12345 ]
+  }
+}

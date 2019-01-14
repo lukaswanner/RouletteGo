@@ -1,7 +1,7 @@
 
 import java.awt.Color
 
-import model.playboardComponent.playboardBaseImpl.Cell
+import de.htwg.se.roulette.model.playboardComponent.playboardBaseImpl.Cell
 import org.scalatest.{Matchers, WordSpec}
 
 class CellSpec extends WordSpec with Matchers {

@@ -1,5 +1,5 @@
 import org.scalatest.{Matchers, WordSpec}
-import util.Command
+import de.htwg.se.roulette.util.Command
 
 class incrCommand extends Command {
   var state:Int =0
