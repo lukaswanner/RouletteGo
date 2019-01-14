@@ -3,6 +3,4 @@ scala: - 2.12.7
 
 script: - sbt clean coverage test coverageReport
 
-repo_token: FD20AsOEjb7vytue70n8PMqZxqM9Dm8XK
-
 after_success: - sbt coverageReport coveralls
