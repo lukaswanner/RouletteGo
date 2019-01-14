@@ -34,7 +34,6 @@ class gui(controller: ControllerInterface) extends Frame {
   }
 
   //redraw(controller.getPlayBoard().getactivePlayer())
-  visible = true
   centerOnScreen()
   repaint()
 
@@ -76,9 +75,6 @@ class gui(controller: ControllerInterface) extends Frame {
             statusline.text = "Gewonnen ! Die richtige Zahl war: " + controller.getRandom()
           } else {
             statusline.text = "Verloren ! Die richtige Zahl war: " + controller.getRandom()
-            statusline.text = "Gewonnen ! die korrekte Zahl war : " + controller.getRandom()
-          } else {
-            statusline.text = "Verloren ! die korrekte Zahl war : " + controller.getRandom()
           }
           for (i <- 0 until controller.getPlayerCount()) {
             controller.getPlayBoard().undo(i) = new UndoManager
