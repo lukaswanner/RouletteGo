@@ -13,10 +13,11 @@ class controller extends ControllerInterface {
   val r = scala.util.Random
   var random: Int = 0
 
-  def createBoard(PlayerCount: Int, players: Array[Player]): Unit = {
+  def createBoard(PlayerCount: Int, players: Array[Player]): Playboard = {
     playboard = new Playboard(range + 1, players)
     playboard.active(0) = true
     publish(new GameStart)
+    playboard
   }
 
 
@@ -31,6 +32,7 @@ class controller extends ControllerInterface {
     return random
   }
 
+
   def setRange(newRange: Int): Int = {
     range = newRange
     return range
@@ -38,6 +40,11 @@ class controller extends ControllerInterface {
 
   def getPlayBoard(): Playboard = {
     playboard
+  }
+
+  def setPlayBoard(newPlayboard:Playboard): Playboard = {
+    this.playboard = newPlayboard
+    newPlayboard
   }
 
   def getPlayerCount(): Int = {
@@ -60,9 +67,10 @@ class controller extends ControllerInterface {
     return false
   }
 
-  def resize(newRange: Int): Unit = {
+  def resize(newRange: Int): Int = {
     range = newRange - 1
     createBoard(getPlayerCount(), getPlayBoard().Players)
+    range
   }
 
   def getRange(): Int = {
@@ -71,6 +79,11 @@ class controller extends ControllerInterface {
 
   def undo(Position: Int): Unit = {
     playboard.undoStep(Position)
+    publish(new CellChanged)
+  }
+
+  def redo(Position: Int): Unit = {
+    playboard.redoStep(Position)
     publish(new CellChanged)
   }
 

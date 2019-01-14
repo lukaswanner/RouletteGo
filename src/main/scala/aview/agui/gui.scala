@@ -5,6 +5,8 @@ import model.playboardComponent.playboardBaseImpl.Solver
 import util.UndoManager
 import model.playerComponent.Player
 
+import model.fileIoComponent.fileIoJsonImpl.FileIO
+
 import scala.swing._
 import scala.swing.Swing.LineBorder
 import scala.swing.event._
@@ -31,6 +33,7 @@ class gui(controller: ControllerInterface) extends Frame {
       redraw(controller.getPlayBoard().getactivePlayer())
   }
 
+  //redraw(controller.getPlayBoard().getactivePlayer())
   visible = true
   centerOnScreen()
   repaint()
@@ -48,7 +51,7 @@ class gui(controller: ControllerInterface) extends Frame {
       contents += new Menu("File") {
         mnemonic = Key.F
         contents += new MenuItem(Action("New") {
-          controller.getPlayBoard().refresh()
+          controller.setPlayBoard(controller.getPlayBoard().refresh())
           redraw(controller.getPlayBoard().getactivePlayer())
         })
         contents += new MenuItem(Action("Quit") {
@@ -61,7 +64,7 @@ class gui(controller: ControllerInterface) extends Frame {
           controller.undo(controller.getPlayBoard().getactivePlayer())
         })
         contents += new MenuItem(Action("Redo") {
-          controller.undo(controller.getPlayBoard().getactivePlayer())
+          controller.redo(controller.getPlayBoard().getactivePlayer())
         })
       }
       contents += new Menu("Solve") {
@@ -70,14 +73,17 @@ class gui(controller: ControllerInterface) extends Frame {
           var solver = new Solver(controller.getPlayBoard())
           if (solver.checkforWin(controller.getRandom(), controller.getPlayBoard().getactivePlayer())) {
             controller.getNewRandom(controller.getRange())
+            statusline.text = "Gewonnen ! Die richtige Zahl war: " + controller.getRandom()
+          } else {
+            statusline.text = "Verloren ! Die richtige Zahl war: " + controller.getRandom()
             statusline.text = "Gewonnen ! die korrekte Zahl war : " + controller.getRandom()
           } else {
             statusline.text = "Verloren ! die korrekte Zahl war : " + controller.getRandom()
           }
-          for (i <- 0 until controller.getPlayBoard().Players.length) {
+          for (i <- 0 until controller.getPlayerCount()) {
             controller.getPlayBoard().undo(i) = new UndoManager
           }
-          controller.getPlayBoard().refreshOne(controller.getPlayBoard().getactivePlayer())
+          controller.setPlayBoard(controller.getPlayBoard().refreshOne(controller.getPlayBoard().getactivePlayer()))
           redraw(controller.getPlayBoard().getactivePlayer())
         })
       }
@@ -85,6 +91,22 @@ class gui(controller: ControllerInterface) extends Frame {
         mnemonic = Key.O
         contents += new MenuItem(Action("Refresh") {
           redraw(controller.getPlayBoard().getactivePlayer())
+        })
+        contents += new MenuItem(Action("read JSON") {
+          val js = new FileIO
+          js.load
+        })
+        contents += new MenuItem(Action("read XML") {
+          val xml = new FileIO
+          xml.load
+        })
+        contents += new MenuItem(Action("save JSON") {
+          val js = new FileIO
+          js.save(controller.getPlayBoard())
+        })
+        contents += new MenuItem(Action("save XML") {
+          val xml = new FileIO
+          xml.save(controller.getPlayBoard())
         })
         contents += new MenuItem(Action("Size of 1") {
           controller.resize(1)
@@ -188,11 +210,10 @@ class gui(controller: ControllerInterface) extends Frame {
         }
         contents += button
         border = Swing.EmptyBorder(10, 100, 10, 100)
-        centerOnScreen()
       }
     }
+    frame.centerOnScreen()
     frame.visible = true
-    centerOnScreen()
   }
 
   def SetupPlayer(PlayerCount: Int): Unit = {
@@ -221,11 +242,11 @@ class gui(controller: ControllerInterface) extends Frame {
         contents += button
 
         border = Swing.EmptyBorder(10, 100, 10, 100)
-        centerOnScreen()
       }
     }
+
     frame.visible = true
-    centerOnScreen()
+    frame.centerOnScreen()
 
   }
 
