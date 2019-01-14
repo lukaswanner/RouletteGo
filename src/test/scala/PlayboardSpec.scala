@@ -75,6 +75,8 @@ class PlayboardSpec extends WordSpec with Matchers {
         playboard.Step(0, "4", controller) should be(true)
         playboard.undoStep(0) should be(true)
         playboard.redoStep(0) should be (true)
+        playboard.undoStep(10) should be(false)
+        playboard.redoStep(10) should be (false)
       }
 
       "be true the active player is 1 or higher and false if hes 0" in {

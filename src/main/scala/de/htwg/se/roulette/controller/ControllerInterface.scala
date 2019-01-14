@@ -32,9 +32,9 @@ trait ControllerInterface extends Publisher{
 
   def createFileIO():FileIOInterface
 
-  def undo(Position: Int): Unit
+  def undo(Position: Int): Boolean
 
-  def redo(Position: Int): Unit
+  def redo(Position: Int): Boolean
 
 
   def createPlayer(Name: String, Wallet: Int): Player

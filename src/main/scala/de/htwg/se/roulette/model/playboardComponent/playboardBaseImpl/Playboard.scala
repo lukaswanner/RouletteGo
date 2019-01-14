@@ -88,13 +88,19 @@ case class Playboard(AmountofCells: Int, Players: Array[Player]) extends playboa
   }
 
   def undoStep(Position: Int): Boolean = {
-    undo(Position).undoStep()
-    true
+    if (Position < Players.length) {
+      undo(Position).undoStep()
+      return true
+    }
+    return false
   }
 
   def redoStep(Position: Int): Boolean = {
-    undo(Position).redoStep
-    true
+    if (Position < Players.length) {
+      undo(Position).redoStep
+      return true
+    }
+    return false
   }
 
   def activatePlayer(Position: Int): Boolean = {
@@ -104,8 +110,8 @@ case class Playboard(AmountofCells: Int, Players: Array[Player]) extends playboa
     } else {
       active(Position + 1) = true
     }
-    for (i<- 1 until active.length) {
-      if(active(i)) {
+    for (i <- 1 until active.length) {
+      if (active(i)) {
         return true
       }
     }
@@ -113,13 +119,13 @@ case class Playboard(AmountofCells: Int, Players: Array[Player]) extends playboa
   }
 
   def getactivePlayer(): Int = {
-    var active = 0
+    var player = 0
     for (i <- 0 until active.length) {
       if (active(i)) {
-        active = i
+        player = i
       }
     }
-    return active
+    return player
   }
 }
 

@@ -47,7 +47,7 @@ class controller @Inject() extends ControllerInterface {
     playboard
   }
 
-  def setPlayBoard(newPlayboard:Playboard): Playboard = {
+  def setPlayBoard(newPlayboard: Playboard): Playboard = {
     this.playboard = newPlayboard
     newPlayboard
   }
@@ -82,18 +82,24 @@ class controller @Inject() extends ControllerInterface {
     range
   }
 
-  def undo(Position: Int): Unit = {
-    playboard.undoStep(Position)
-    publish(new CellChanged)
+  def undo(Position: Int): Boolean = {
+    if (playboard.undoStep(Position)) {
+      publish(new CellChanged)
+      return true
+    }
+    return false
   }
 
-  def redo(Position: Int): Unit = {
-    playboard.redoStep(Position)
-    publish(new CellChanged)
+  def redo(Position: Int): Boolean = {
+    if (playboard.redoStep(Position)) {
+      publish(new CellChanged)
+      return true
+    }
+    return false
   }
 
-  def createFileIO():FileIOInterface ={
-   injector.instance[FileIOInterface]
+  def createFileIO(): FileIOInterface = {
+    injector.instance[FileIOInterface]
   }
 
 
